@@ -1,0 +1,18 @@
+#:import os os
+
+<Placeholder@Image>:
+    size: '75sp', '75sp'
+    size_hint: None, None
+    source: os.path.join("images", "kivy-logo-black-256.png")
+
+
+<CreateScreen>:
+    BoxLayout:
+        id: title_layout
+        size_hint: None, None
+        size: self.parent.size
+        Label:
+            id: test_label
+            text: 'This is the create screen'
+
+

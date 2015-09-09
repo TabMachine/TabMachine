@@ -1,0 +1,32 @@
+#:import Factory kivy.factory.Factory
+
+<NavMenuOption@SpinnerOption>:
+    height: app.font_size_regular * 1.85
+
+<NavMenu>:
+    slide_spinner: slide_spinner
+    id: slide_menu
+    orientation: 'horizontal'
+    size_hint_y: None
+    height: app.font_size_regular * 1.85
+    BoxLayout:
+        Button:
+            font_size: app.font_size_regular
+            text: 'Create'
+            on_press: slide_menu.go_create()
+        Spinner:
+            id: slide_spinner
+            option_cls: Factory.get("NavMenuOption")
+            on_text: slide_menu.go_slide(self)
+        Button:
+            font_size: app.font_size_regular
+            text: 'View/Edit'
+            on_press: slide_menu.go_view()
+        #Label:
+        #    text: 'Slider value is %s' % int(s1.value) if s1.value else 'Slider not set'
+        #Slider:
+        #    id: s1
+        #    value: 3
+        #    range: (0,20)
+        #    step: 1
+

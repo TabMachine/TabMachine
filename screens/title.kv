@@ -1,0 +1,20 @@
+<TitleLabel@Label>:
+    size_hint_y: None
+    height: '80sp'
+
+<TitleScreen>:
+    BoxLayout:
+        id: title_layout
+        size_hint: None, None
+        size: self.parent.size
+        Button:
+            id: open_tab
+            text: 'Open Tab'
+            on_press: root.manager.current = 'ViewScreen'
+        Button:
+            id: create_tab
+            text: 'Create Tab'
+            on_press: root.manager.current = 'CreateScreen'
+        #Label:
+        #    id: test_label
+        #    text: root.test_string
