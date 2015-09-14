@@ -1,10 +1,9 @@
 #:import KivyLexer kivy.extras.highlight.KivyLexer
 
 <ViewScreen>:
-    BoxLayout:
-        Label:
-            id: test_label
-            text: root.test_string
+
+
+
 <LoadDialog>:
     BoxLayout:
         size: root.size
@@ -27,7 +26,7 @@
 <SaveDialog>:
     text_input: text_input
     BoxLayout:
-        size: root.size*.5
+        size: root.size*.75
         pos: root.pos
         orientation: "vertical"
         FileChooserListView:
