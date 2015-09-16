@@ -111,6 +111,11 @@ class ViewScreen(Screen):
         self._popup.open()
 
     def drawtab(self, tab, wid):
+        # Required tab pre-processing:
+        # 1. Between brackets (|) enforce a bar width (set number of characters)
+        # 2. Find all two-digit numbers in tab (10 to 24) and add one
+        #    hyphen (-) after
+
         charwidth = 32
         charheight = 32
         lineheight = 32
@@ -127,8 +132,9 @@ class ViewScreen(Screen):
             # Parse by character, translating input to graphical output
             with wid.canvas:
                 for j in range(len(line)):
+                    print(j)
                     thischar = line[j]
-                    print(thischar)
+                    #print(thischar)
                     if thischar == '\n' or thischar == ':':
                         pass
                     elif j == 0:
@@ -138,23 +144,67 @@ class ViewScreen(Screen):
                                   size=(32, 32))
                     elif thischar == "|" and j > 0:
                         # Plus bar
-                        print("Making vertical line")
+                        #print("Making vertical line")
                         Rectangle(source='atlas://Assets/main/plusbar',
                                   pos=(j*charwidth, startheight-(i*lineheight)),
                                   size=(32, 32))
                     elif thischar == "-":
                         # Horizontal line
-                        print("Making horizontal line")
+                        #print("Making horizontal line")
                         Rectangle(source='atlas://Assets/main/bar',
                                   pos=(j*charwidth, startheight-(i*lineheight)),
                                   size=(32, 32))
-                    elif int(thischar) >= 0 and int(thischar) <= 24:
-                        print("Making " + thischar)
-                        Rectangle(source=('atlas://Assets/main/norm' + thischar),
-                                  pos=(j*charwidth, startheight-(i*lineheight)),
-                                  size=(32, 32))
+                    # Look for digits
                     else:
-                        print("Can't draw it yet")
+                        found = False
+                        thisdigit = -1
+
+                        # See if this character is in range (0-9)
+                        for num in range(10):
+                            if str(num) == thischar and not found:
+                                found = True
+                                thisdigit = num
+                        # Get next and last character for 2-digit notes
+                        lastchar = ''
+                        nextchar = ''
+                        if found:
+                            if j-1 >= 0:
+                                lastchar = line[j-1]
+                            if j+1 < len(line):
+                                nextchar = line[j+1]
+
+                        if found and lastchar != '1' and lastchar != '2':
+                            # Could be a double digit note
+                            if thischar == '1' or thischar =='2':
+                                nextfound = False
+                                nextchar = line[j+1]
+                                for num in range(10):
+                                    if str(num) == nextchar and not nextfound:
+                                        nextfound = True
+                                        combo = thischar + nextchar
+                                        print("Making " + combo)
+                                        Rectangle(source=('atlas://Assets/main/norm' + combo),
+                                                  pos=(j*charwidth, startheight-(i*lineheight)),
+                                                  size=(32, 32))
+
+                                # Wasn't double digit, draw it alone
+                                if not nextfound:
+                                    #print("Making " + thischar)
+                                    Rectangle(source=('atlas://Assets/main/norm' + thischar),
+                                              pos=(j*charwidth, startheight-(i*lineheight)),
+                                              size=(32, 32))
+
+                            # It's just a lonely single digit, draw it
+                            else:
+                                #print("Making " + thischar)
+                                Rectangle(source=('atlas://Assets/main/norm' + thischar),
+                                          pos=(j*charwidth, startheight-(i*lineheight)),
+                                          size=(32, 32))
+                        else:
+                            print("Unknown symbol or second digit")
+                            Rectangle(source='atlas://Assets/main/bar',
+                                      pos=(j*charwidth, startheight-(i*lineheight)),
+                                      size=(32, 32))
 
             # Increment counter
             i += 1
