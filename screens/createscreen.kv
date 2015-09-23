@@ -21,6 +21,7 @@
 		Widget
 		Widget
 		Button:
+			id: Toolbar
 			text: 'Tools'
 			size_hint: (1, .10)
 			on_release: Dropdown.open(self)
@@ -28,6 +29,8 @@
 		Widget
 		DropDown:
 			id: Dropdown
+			#auto_dismiss: False
+			#attach_to: Toolbar
 			on_parent: self.dismiss()
 			Button:
 				text: 'Play'
