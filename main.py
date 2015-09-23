@@ -10,7 +10,7 @@ kivy.require('1.8.0')
 
 from kivy.config import Config
 Config.set('graphics', 'width', '1400')
-Config.set('graphics', 'height', '420')
+Config.set('graphics', 'height', '400')
 
 from kivy.app import App
 from kivy.animation import Animation
@@ -51,12 +51,18 @@ import os
 EventLoop.ensure_window()
 __version__ = '0.2.4'
 
+# Constant declaration
+CHAR_WIDTH = 32
+CHAR_HEIGHT = CHAR_WIDTH
+
 screens = ["Title", "CreateScreen", "ViewScreen"]
 for screen in screens:
     kv_file = "{}.kv".format(screen.lower())
     Builder.load_file(os.path.join("screens", kv_file))
 
 class LoadDialog(FloatLayout):
+    curdir = os.path.dirname(os.path.realpath(__file__))
+    # Need to use curdir to open THIS folder location
     load = ObjectProperty(None)
     cancel = ObjectProperty(None)
 
@@ -79,19 +85,21 @@ class ViewScreen(Screen):
     def on_enter(self):
         # starts the file manager when this screen is entered
         content = LoadDialog(load=self.load, cancel=self.dismiss_popup)
-        self._popup = Popup(title="Load file", content=content, size_hint=(0.4, 0.6))
+        self._popup = Popup(title="Load file", content=content, size_hint=(0.4, 0.8))
         self._popup.open()
 
     def dismiss_popup(self):
         self._popup.dismiss()
+        self.manager.current = 'Title'
 
+    curDirectory = os.path.dirname(os.path.realpath(__file__))
     def load(self, path, filename):
         #loads the file
         tab = open(os.path.join(path, filename[0]))
         self._popup.dismiss()
 
         # Draw the tab on the screen
-        wid = Widget(size_hint=(10, 1), pos=(0.5, 0))
+        wid = Widget(size_hint=(10, 0.33), pos_hint=(0.5, 0))
         self.drawtab(tab, wid)
 
         slide = Slider(min=0, max=1, value=25, orientation='horizontal', step=0.01, size_hint=(1, 0.1))
@@ -113,14 +121,9 @@ class ViewScreen(Screen):
     def drawtab(self, tab, wid):
         # Required tab pre-processing:
         # 1. Between brackets (|) enforce a bar width (set number of characters)
-        # 2. Find all two-digit numbers in tab (10 to 24) and add one
-        #    hyphen (-) after
 
-        charwidth = 32
-        charheight = 32
         lineheight = 32
-        startheight = 500
-        i = 0
+        startheight = 6 * lineheight
 
         # Get path to current file to find atlas file
         curdir = os.path.dirname(os.path.realpath(__file__))
@@ -128,6 +131,7 @@ class ViewScreen(Screen):
         print(curdir + r"/Assets/main.atlas")
         atlas = Atlas(curdir + r"/Assets/main.atlas")
 
+        i = 0
         for line in tab:
             # Parse by character, translating input to graphical output
             with wid.canvas:
@@ -146,13 +150,13 @@ class ViewScreen(Screen):
                         # Plus bar
                         #print("Making vertical line")
                         Rectangle(source='atlas://Assets/main/plusbar',
-                                  pos=(j*charwidth, startheight-(i*lineheight)),
+                                  pos=(j*CHAR_WIDTH, startheight-(i*lineheight)),
                                   size=(32, 32))
                     elif thischar == "-":
                         # Horizontal line
                         #print("Making horizontal line")
                         Rectangle(source='atlas://Assets/main/bar',
-                                  pos=(j*charwidth, startheight-(i*lineheight)),
+                                  pos=(j*CHAR_WIDTH, startheight-(i*lineheight)),
                                   size=(32, 32))
                     # Look for digits
                     else:
@@ -184,26 +188,26 @@ class ViewScreen(Screen):
                                         combo = thischar + nextchar
                                         print("Making " + combo)
                                         Rectangle(source=('atlas://Assets/main/norm' + combo),
-                                                  pos=(j*charwidth, startheight-(i*lineheight)),
+                                                  pos=(j*CHAR_WIDTH, startheight-(i*lineheight)),
                                                   size=(32, 32))
 
                                 # Wasn't double digit, draw it alone
                                 if not nextfound:
                                     #print("Making " + thischar)
                                     Rectangle(source=('atlas://Assets/main/norm' + thischar),
-                                              pos=(j*charwidth, startheight-(i*lineheight)),
+                                              pos=(j*CHAR_WIDTH, startheight-(i*lineheight)),
                                               size=(32, 32))
 
                             # It's just a lonely single digit, draw it
                             else:
                                 #print("Making " + thischar)
                                 Rectangle(source=('atlas://Assets/main/norm' + thischar),
-                                          pos=(j*charwidth, startheight-(i*lineheight)),
+                                          pos=(j*CHAR_WIDTH, startheight-(i*lineheight)),
                                           size=(32, 32))
                         else:
                             print("Unknown symbol or second digit")
                             Rectangle(source='atlas://Assets/main/bar',
-                                      pos=(j*charwidth, startheight-(i*lineheight)),
+                                      pos=(j*CHAR_WIDTH, startheight-(i*lineheight)),
                                       size=(32, 32))
 
             # Increment counter
@@ -222,23 +226,21 @@ class TabMachine(BoxLayout):
         super(TabMachine, self).__init__(**kwargs)
         self.orientation = 'vertical'
         # Adds the screen manager to the main app
-        self.content = ScreenManager()
-        self.content.add_widget(TitleScreen(name='Title'))
-        self.content.add_widget(CreateScreen(name='CreateScreen'))
-        self.content.add_widget(ViewScreen(name='ViewScreen'))
+        self.root = ScreenManager()
         # Displays in the order of adds
         # Add the nav bar to the top
+        self.root.add_widget(TitleScreen(name='Title'))
+        self.root.add_widget(CreateScreen(name='CreateScreen'))
+        self.root.add_widget(ViewScreen(name='ViewScreen'))
+
         self.slide_menu = NavMenu(root=self)
         self.add_widget(self.slide_menu)
         # Add the screen to the middle.
-        self.add_widget(self.content)
+        #self.add_widget(self.content)
+        self.add_widget(self.root)
 
-    def get_current_slide(self):
-        print('test1')
-        #return self.content.current
-
-    def set_current_slide(self, jump_to):
-        self.content.current = jump_to
+    def set_current_screen(self, jump_to):
+        self.root.current = jump_to
 
 Builder.load_file("navmenu.kv")
 class NavMenu(BoxLayout):
@@ -254,14 +256,15 @@ class NavMenu(BoxLayout):
     #        self.root.set_current_slide(spinner.text)
 
     def go_create(self):
-        self.root.set_current_slide('CreateScreen')
+        self.root.set_current_screen('CreateScreen')
 
     def go_view(self):
-        self.root.set_current_slide('ViewScreen')
+        self.root.set_current_screen('ViewScreen')
 
 class TabMachineApp(App):
     font_size_regular = sp(25)
 
+    curDirectory = os.path.dirname(os.path.realpath(__file__))
     def build(self):
         return TabMachine()
 

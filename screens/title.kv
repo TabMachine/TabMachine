@@ -1,20 +1,52 @@
 <TitleLabel@Label>:
     size_hint_y: None
     height: '80sp'
+    Label:
+    	text: 'TabMachine'
 
 <TitleScreen>:
-    BoxLayout:
+	label_id: Dropdown.__self__
+    FloatLayout:
         id: title_layout
-        size_hint: None, None
         size: self.parent.size
         Button:
             id: open_tab
             text: 'Open Tab'
+            pos: (475, 250)
+            size_hint: (.30, .50)
             on_press: root.manager.current = 'ViewScreen'
         Button:
             id: create_tab
             text: 'Create Tab'
+            pos: (1475, 250)
+            size_hint: (.30, .50)
             on_press: root.manager.current = 'CreateScreen'
         #Label:
         #    id: test_label
         #    text: root.test_string
+	BoxLayout:
+		Widget
+		Widget
+		Button:
+			text: 'Tools'
+			size_hint: (1, .10)
+			on_release: Dropdown.open(self)
+		Widget
+		Widget
+		DropDown:
+			id: Dropdown
+			on_parent: self.dismiss()
+			Button:
+				text: 'Play'
+				height: 45
+				size_hint: (None, None)
+			Button:
+				text: 'Pause'
+				height: 45
+				size_hint: (None, None)
+			Button:
+				text: 'Help'
+				height: 45
+				size_hint: (None, None)
+		
+		

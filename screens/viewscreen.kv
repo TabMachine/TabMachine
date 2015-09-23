@@ -7,16 +7,16 @@
         size: root.size
         pos: root.pos
         orientation: "vertical"
-        FileChooserListView:
+        FileChooserIconView:
             id: filechooser
-
+            path: app.curDirectory
+            filters: ['*.txt']#filters so only .txt files appear.
         BoxLayout:
             size_hint_y: None
             height: 100
             Button:
                 text: "Cancel"
                 on_release: root.cancel()
-
             Button:
                 text: "Load"
                 on_release: root.load(filechooser.path, filechooser.selection)
