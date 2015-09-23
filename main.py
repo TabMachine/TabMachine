@@ -79,7 +79,7 @@ class ViewScreen(Screen):
     def on_enter(self):
         # starts the file manager when this screen is entered
         content = LoadDialog(load=self.load, cancel=self.dismiss_popup)
-        self._popup = Popup(title="Load file", content=content, size_hint=(0.4, 0.6))
+        self._popup = Popup(title="Load file", content=content, size_hint=(0.4, 0.8))
         self._popup.open()
 
     def dismiss_popup(self):

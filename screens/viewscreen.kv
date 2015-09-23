@@ -12,13 +12,15 @@
             id: filechooser
 
         BoxLayout:
-            size_hint_y: None
-            height: 100
+            size_hint_y: .15
+			
             Button:
+				#size_hint: (.5,.20)
                 text: "Cancel"
                 on_release: root.cancel()
 
             Button:
+				#size_hint: (.5,.2)
                 text: "Load"
                 on_release: root.load(filechooser.path, filechooser.selection)
 	# Editor Toolbar
