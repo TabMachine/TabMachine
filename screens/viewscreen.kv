@@ -3,6 +3,7 @@
 <ViewScreen>:
 
 <LoadDialog>:
+	label_id: Dropdown.__self__
     BoxLayout:
         size: root.size
         pos: root.pos
@@ -12,16 +13,42 @@
             path: app.curDirectory
             filters: ['*.txt']#filters so only .txt files appear.
         BoxLayout:
-            size_hint_y: None
-            height: 100
+            size_hint_y: .15
+			
             Button:
+				#size_hint: (.5,.20)
                 text: "Cancel"
                 on_release: root.cancel()
             Button:
+				#size_hint: (.5,.2)
                 text: "Load"
                 on_release: root.load(filechooser.path, filechooser.selection)
+	# Editor Toolbar
+	BoxLayout:
+		Widget
+		Widget
+		Button:
+			text: 'Tools'
+			size_hint: (1, .15)
+			on_release: Dropdown.open(self)
+		DropDown:
+			id: Dropdown
+			on_parent: self.dismiss()
+			Button:
+				text: 'Play'
+				height: 45
+				size_hint: (None, None)
+			Button:
+				text: 'Pause'
+				height: 45
+				size_hint: (None, None)
+			Button:
+				text: 'Help'
+				height: 45
+				size_hint: (None, None)
 
 <SaveDialog>:
+	label_widget: Dropdown.__self__
     text_input: text_input
     BoxLayout:
         size: root.size*.75
@@ -47,3 +74,29 @@
             Button:
                 text: "Save"
                 on_release: root.save(filechooser.path, text_input.text)
+	
+	# Editor Toolbar
+	BoxLayout:
+		Widget
+		Widget
+		Button:
+			text: 'Tools'
+			size_hint: (1, .15)
+			on_release: Dropdown.open(self)
+		Widget
+		Widget
+		DropDown:
+			id: Dropdown
+			on_parent: self.dismiss()
+			Button:
+				text: 'Play'
+				height: 45
+				size_hint: (None, None)
+			Button:
+				text: 'Pause'
+				height: 45
+				size_hint: (None, None)
+			Button:
+				text: 'Help'
+				height: 45
+				size_hint: (None, None)
