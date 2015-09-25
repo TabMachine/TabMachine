@@ -81,6 +81,7 @@ class CreateScreen(Screen):
 class ViewScreen(Screen):
     loadfile = ObjectProperty(None)
     savefile = ObjectProperty(None)
+    tabarea = ObjectProperty(None)
 
     def on_enter(self):
         # starts the file manager when this screen is entered
@@ -98,29 +99,22 @@ class ViewScreen(Screen):
         tab = open(os.path.join(path, filename[0]))
         self._popup.dismiss()
 
-        # Draw the tab on the screen
-        wid = Widget(size_hint=(10, 0.33), pos_hint=(0.5, 0))
-        self.drawtab(tab, wid)
-
-        slide = Slider(min=0, max=1, value=25, orientation='horizontal', step=0.01, size_hint=(1, 0.1))
-        slide.bind(value=partial(self.scroll_change, slide))
-
-        scrl = ScrollView()
-        scrl.bind(scroll_x=partial(self.slider_change, slide))
-        scrl.add_widget(wid)
-
-        self.add_widget(slide)
-        self.add_widget(scrl)
-
     def show_save(self):
         content = SaveDialog(save=self.save, cancel=self.dismiss_popup)
         print(self.save)
         self._popup = Popup(title="Save file", content=content, size_hint=(0.9, 0.9))
         self._popup.open()
 
-    def drawtab(self, tab, wid):
+
+class TabArea(BoxLayout):
+    tabCanvas = ObjectProperty(None)
+    slide = ObjectProperty(None)
+
+    def drawtab(self, tab):
         # Required tab pre-processing:
         # 1. Between brackets (|) enforce a bar width (set number of characters)
+
+        wid = tabCanvas
 
         lineheight = 32
         startheight = 6 * lineheight

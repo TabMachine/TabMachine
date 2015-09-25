@@ -2,6 +2,11 @@
 
 <ViewScreen>:
 	label_id: Dropdown.__self__
+	tabarea: tabarea
+
+	TabArea:
+		id: tabarea
+
 	# Editor Toolbar
 	BoxLayout:
 		Widget
@@ -28,6 +33,30 @@
 				height: 45
 				size_hint: (None, None)
 
+<TabArea>
+	tabCanvas: tabCanvas
+	slide: slide
+
+	BoxLayout:
+		orientation: 'vertical'
+		ScrollView:
+			bar_width: 0
+			do_scroll_y: False
+			Widget:
+				id: tabCanvas
+				size_hint_x: 5
+				size_hint_y: 5
+		Slider:
+			id: slide
+			min: 0
+			max: 100
+			value: 1
+			orientation: 'horizontal'
+			step: 1
+			size_hint: (1, .3)
+			#value: scroll_change
+			#on_scroll_x: slider_change()
+
 <LoadDialog>:
     BoxLayout:
         size: root.size
@@ -39,7 +68,7 @@
             filters: ['*.txt']#filters so only .txt files appear.
         BoxLayout:
             size_hint_y: .15
-			
+
             Button:
 				#size_hint: (.5,.20)
                 text: "Cancel"
@@ -48,6 +77,7 @@
 				#size_hint: (.5,.2)
                 text: "Load"
                 on_release: root.load(filechooser.path, filechooser.selection)
+
 <SaveDialog>:
     text_input: text_input
     BoxLayout:
