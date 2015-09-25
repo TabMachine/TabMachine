@@ -82,6 +82,7 @@ class ViewScreen(Screen):
     loadfile = ObjectProperty(None)
     savefile = ObjectProperty(None)
     tabarea = ObjectProperty(None)
+    curDirectory = os.path.dirname(os.path.realpath(__file__))
 
     def on_enter(self):
         # starts the file manager when this screen is entered
@@ -93,11 +94,13 @@ class ViewScreen(Screen):
         self._popup.dismiss()
         self.manager.current = 'Title'
 
-    curDirectory = os.path.dirname(os.path.realpath(__file__))
     def load(self, path, filename):
         #loads the file
         tab = open(os.path.join(path, filename[0]))
         self._popup.dismiss()
+
+        # Draws tab in the ViewScreen's tabArea
+        self.tabarea.drawtab(tab)
 
     def show_save(self):
         content = SaveDialog(save=self.save, cancel=self.dismiss_popup)
@@ -114,7 +117,7 @@ class TabArea(BoxLayout):
         # Required tab pre-processing:
         # 1. Between brackets (|) enforce a bar width (set number of characters)
 
-        wid = tabCanvas
+        wid = self.tabCanvas
 
         lineheight = 32
         startheight = 6 * lineheight
