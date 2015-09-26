@@ -46,9 +46,11 @@ from kivy.atlas import Atlas
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.slider import Slider
 from functools import partial
-from libs import browser
+#from libs import browser
 
 import os
+i = 0
+vp = VideoPlayer(source="videos/testVideo.mp4", options={'allow_stretch': True})
 EventLoop.ensure_window()
 __version__ = '0.2.4'
 #Adds different fonts to the program can use the name in the label to use different
@@ -83,14 +85,13 @@ class SaveDialog(FloatLayout):
     save = ObjectProperty(None)
     #text_input = ObjectProperty(None)
     cancel = ObjectProperty(None)
-
 class TitleScreen(Screen):
-    def on_enter(self):
-        vp = VideoPlayer(source=os.path.join("videos",
-                            "testVideo.mp4"),
-                         options={'allow_stretch': True})
-        self.ids.video_ai.add_widget(vp)
-
+	def on_enter(self):
+		self.ids.video_ai.add_widget(vp)
+		
+	def on_leave(self):
+		self.ids.video_ai.remove_widget(vp)
+		
 class CreateScreen(Screen):
     def on_enter(self):
         print('Enter create screen')

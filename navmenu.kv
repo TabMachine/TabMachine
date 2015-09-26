@@ -4,6 +4,7 @@
     height: app.font_size_regular * 1.85
 
 <NavMenu>:
+	label_widget: s1.__self__
     #slide_spinner: slide_spinner
     id: slide_menu
     orientation: 'horizontal'
@@ -24,11 +25,17 @@
             text: 'View/Edit'
             size_hint_x: .1
             on_press: slide_menu.go_view()
-        #Label:
-        #    text: 'Slider value is %s' % int(s1.value) if s1.value else 'Slider not set'
-        #Slider:
-        #    id: s1
-        #    value: 3
-        #    range: (0,20)
-        #    step: 1
+        Widget:
+			size_hint_x: .45
+		Button:
+			size_hint_x: .04
+			#size_hint_y: .75
+			#text: 'Slider value is %s' % int(s1.value) if s1.value else 'Slider not set'
+			background_normal: 'atlas://data/images/defaulttheme/audio-volume-high' if s1.value > 65 else 'atlas://data/images/defaulttheme/audio-volume-medium' if 25 < s1.value < 70 else 'atlas://data/images/defaulttheme/audio-volume-low' if 0 < s1.value < 30 else 'atlas://data/images/defaulttheme/audio-volume-muted'
+        Slider:
+			size_hint_x: .30
+            id: s1
+            value: 50
+            range: (0,100)
+            step: 5
 

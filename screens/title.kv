@@ -1,6 +1,4 @@
 <TitleScreen>:
-
-	label_id: Dropdown.__self__
     canvas.before:
         Rectangle:
             pos: self.pos
@@ -19,7 +17,7 @@
     BoxLayout: #adds the video player
 		size_hint: (.2, .6)
 		id: video_ai
-		x: self.parent.x
+		x: self.parent.x + 1100
 		y: app.font_size_large
 
     Label: #Adds the powered by at the bottom right
@@ -28,7 +26,7 @@
     	color: 0,0,0,1 #Font color
 		Button:
 			y: self.parent.y 
-			x: self.parent.x + 225
+			x: self.parent.x + 120
 			background_color: (0.0, 0.0, 0.0, 0.0)
             on_press: app.open_browser("http://kivy.org/")
 	    	Image:
@@ -62,30 +60,3 @@
 		            allow_stretch: True
 		            y: self.parent.y + self.parent.height - 400
         			x: self.parent.x
-
-	    #Editor Tab    
-		BoxLayout:
-			Widget
-			Widget
-			Button:
-				text: 'Tools'
-				size_hint: (1, .10)
-				on_release: Dropdown.open(self)
-			Widget
-			Widget
-			DropDown:
-				id: Dropdown
-				on_parent: self.dismiss()
-				Button:
-					text: 'Play'
-					height: 45
-					size_hint: (None, None)
-				Button:
-					text: 'Pause'
-					height: 45
-					size_hint: (None, None)
-				Button:
-					text: 'Help'
-					height: 45
-					size_hint: (None, None)	
-		
