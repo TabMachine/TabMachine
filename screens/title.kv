@@ -1,29 +1,91 @@
-<TitleLabel@Label>:
-    size_hint_y: None
-    height: '80sp'
-    Label:
-    	text: 'TabMachine'
-
 <TitleScreen>:
+
+	label_id: Dropdown.__self__
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: "images/white_vector.png"
+	Label:#adds the title at the top
+        size_hint: (None, None)
+        font_name: 'bitMap'
+        font_size: app.font_size_large
+        text: 'Tab Machine'
+        color: 0,0,0,1 #Font color
+        #center: root.center
+        y: root.height - app.font_size_xlarge
+        x: root.width / 2 - 70
+
+    BoxLayout: #adds the video player
+		size_hint: (.2, .6)
+		id: video_ai
+		x: self.parent.x
+		y: app.font_size_large
+
+    Label: #Adds the powered by at the bottom right
+		size_hint: (.1, None)
+    	text: 'Powered By:'
+    	color: 0,0,0,1 #Font color
+		Button:
+			y: self.parent.y 
+			x: self.parent.x + 225
+			background_color: (0.0, 0.0, 0.0, 0.0)
+            on_press: app.open_browser("http://kivy.org/")
+	    	Image:
+	    		source: 'images/kivy-logo-black-256.png'
+				y: self.parent.y 
+				x: self.parent.x
+
+	#Main Buttons
     FloatLayout:
-    BoxLayout:
-        id: title_layout
-        size: self.parent.size
-        Button:
-            id: open_tab
-            text: 'Open Tab'
-            pos: (475, 250)
-            size_hint: (.30, .50)
-            on_press: root.manager.current = 'ViewScreen'
-        Button:
-            id: create_tab
-            text: 'Create Tab'
-            pos: (1475, 250)
-            size_hint: (.30, .50)
-            on_press: root.manager.current = 'CreateScreen'
-        #Label:
-        #    id: test_label
-        #    text: root.test_string
-	
-		
+	    BoxLayout:
+	    	size: root.width / 3 , 400
+	    	size_hint: (None, None)
+	    	center: root.center
+	        Button:
+	            id: open_tab
+	            on_press: root.manager.current = 'ViewScreen'
+	            background_color: (0.0, 0.0, 0.0, 0.0)
+	            Image:
+		            source: 'images/openFile.png'
+		            size: (self.parent.width, self.parent.height)
+		            allow_stretch: True
+		            y: self.parent.y + self.parent.height - 400
+        			x: self.parent.x
+	        Button:
+	            id: create_tab
+	            on_press: root.manager.current = 'CreateScreen'
+	            background_color: (0.0, 0.0, 0.0, 0.0)
+	            Image:
+		            source: 'images/create.png'
+		            size: (self.parent.width, self.parent.height)
+		            allow_stretch: True
+		            y: self.parent.y + self.parent.height - 400
+        			x: self.parent.x
+
+	    #Editor Tab    
+		BoxLayout:
+			Widget
+			Widget
+			Button:
+				text: 'Tools'
+				size_hint: (1, .10)
+				on_release: Dropdown.open(self)
+			Widget
+			Widget
+			DropDown:
+				id: Dropdown
+				on_parent: self.dismiss()
+				Button:
+					text: 'Play'
+					height: 45
+					size_hint: (None, None)
+				Button:
+					text: 'Pause'
+					height: 45
+					size_hint: (None, None)
+				Button:
+					text: 'Help'
+					height: 45
+					size_hint: (None, None)	
 		
