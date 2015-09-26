@@ -1,39 +1,52 @@
 #:import KivyLexer kivy.extras.highlight.KivyLexer
 
 <ViewScreen>:
-	label_id: Dropdown.__self__
+	#label_id: Dropdown.__self__
 	tabarea: tabarea
 
 	# Editor Toolbar
 	BoxLayout:
 		size: self.parent.size
 		orientation: 'vertical'
-
 		# Tab drawing area
 		TabArea:
 			id: tabarea
-
-		# Dropdown menu
-		Button:
-			text: 'Tools'
-			size_hint: (.12, .10)
-			center_x: root.center_x
-			on_release: Dropdown.open(self)
-		DropDown:
-			id: Dropdown
-			on_parent: self.dismiss()
-			Button:
-				text: 'Play'
-				height: 45
-				size_hint: (None, None)
-			Button:
-				text: 'Pause'
-				height: 45
-				size_hint: (None, None)
-			Button:
-				text: 'Help'
-				height: 45
-				size_hint: (None, None)
+		#Widget
+		#Widget
+		#Slider
+			#id: Volume
+			#size_hint: (1, .15)
+			#pos_hint: {bottom + '100': .70}
+			#value: 50
+			#range: (0,100)
+			#step: 5
+			#volume: Volume.setter(self)
+		ActionBar:
+			app_icon: 'hammer.jpg'
+			pos_hint: {'bottom':1}
+			ActionView:
+				use_separator: True
+				ActionPrevious:
+					title: 'Editor Toolbar'
+					with_previous: False
+				ActionOverflow:
+				ActionButton:
+					text: 'Btn0'
+					#icon: 'atlas://data/images/defaulttheme/audio-volume-high' if Volume.value > 65 else 'atlas://data/images/defaulttheme/audio-volume-medium' if 25 < Volume.value < 70 else 'atlas://data/images/defaulttheme/audio-volume-low' if 0 < Volume.value < 30 else 'atlas://data/images/defaulttheme/audio-volume-muted'
+				ActionButton:
+					text: 'Hammer On'
+				ActionButton:
+					text: 'Slide Off'
+				ActionButton:
+					text: "Thor"
+					icon: 'images/hammer.jpg'   
+				ActionButton:
+					text: 'Btn4'
+				ActionButton
+					#text: '%s' % int(Volume.value)
+				ActionButton
+					icon: 'images/hammer.jpg'
+		
 
 <TabArea>
 	tabCanvas: tabCanvas
@@ -54,7 +67,7 @@
 			value: 25
 			orientation: 'horizontal'
 			step: 0.01
-			size_hint: (1, .3)
+			size_hint: (1, .10)
 			#value: scroll_change
 			#on_scroll_x: slider_change()
 

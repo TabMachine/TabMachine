@@ -46,11 +46,26 @@ from kivy.atlas import Atlas
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.slider import Slider
 from functools import partial
+#from libs import browser
 
 import os
+i = 0
+vp = VideoPlayer(source="videos/testVideo.mp4", options={'allow_stretch': True})
 EventLoop.ensure_window()
 __version__ = '0.2.4'
-
+#Adds different fonts to the program can use the name in the label to use different
+#fonts Ex. Label:
+#          font_name: name_of_font
+from kivy.core.text import LabelBase
+KIVY_FONTS = [
+    {
+        "name": "bitMap",
+        "fn_regular": "fonts/bitMap.ttf",
+    }
+]
+    
+for font in KIVY_FONTS:
+    LabelBase.register(**font)
 # Constant declaration
 CHAR_WIDTH = 32
 CHAR_HEIGHT = CHAR_WIDTH
@@ -70,10 +85,13 @@ class SaveDialog(FloatLayout):
     save = ObjectProperty(None)
     #text_input = ObjectProperty(None)
     cancel = ObjectProperty(None)
-
 class TitleScreen(Screen):
-    pass
-
+	def on_enter(self):
+		self.ids.video_ai.add_widget(vp)
+		
+	def on_leave(self):
+		self.ids.video_ai.remove_widget(vp)
+		
 class CreateScreen(Screen):
     def on_enter(self):
         print('Enter create screen')
@@ -260,10 +278,21 @@ class NavMenu(BoxLayout):
 
 class TabMachineApp(App):
     font_size_regular = sp(25)
+    font_size_large = font_size_regular * 2
+    font_size_xlarge = font_size_regular * 3
 
     curDirectory = os.path.dirname(os.path.realpath(__file__))
     def build(self):
         return TabMachine()
+
+    def open_browser(self, url):
+        browser.open_url(url)
+
+    def on_pause(self):
+        return True
+        
+    def on_resume(self):
+        pass
 
 if __name__ == '__main__':
     TabMachineApp().run()

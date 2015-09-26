@@ -7,7 +7,7 @@
 
 
 <CreateScreen>:
-	label_widget: Dropdown.__self__
+	#label_widget: Dropdown.__self__
     BoxLayout:
         id: title_layout
         size_hint: None, None
@@ -16,33 +16,72 @@
             id: test_label
             text: 'This is the create screen'
 	
-	#Edit Toolbar		
-	BoxLayout:
-		Widget
-		Widget
-		Button:
-			id: Toolbar
-			text: 'Tools'
-			size_hint: (1, .10)
-			on_release: Dropdown.open(self)
-		Widget
-		Widget
-		DropDown:
-			id: Dropdown
+	#Edit Toolbar version 1.0	
+	#BoxLayout:
+		#Widget
+		#Widget
+		#Button:
+			#id: Toolbar
+			#text: 'Tools'
+			#size_hint: (1, .10)
+			#on_release: Dropdown.open(self)
+		#Widget
+		#Widget
+		#DropDown:
+			#id: Dropdown
 			#auto_dismiss: False
 			#attach_to: Toolbar
-			on_parent: self.dismiss()
-			Button:
-				text: 'Play'
-				height: 45
-				size_hint: (None, None)
-			Button:
-				text: 'Pause'
-				height: 45
-				size_hint: (None, None)
-			Button:
-				text: 'Help'
-				height: 45
-				size_hint: (None, None)
+			#on_parent: self.dismiss()
+			#Button:
+				#text: 'Play'
+				#height: 45
+				#size_hint: (None, None)
+			#Button:
+				#text: 'Pause'
+				#height: 45
+				#size_hint: (None, None)
+			#Button:
+				#text: 'Help'
+				#height: 45
+				#size_hint: (None, None)
+				
+	#Edit Toolbar version 2.0
+	BoxLayout:
+		orientation: "vertical"
+		Widget
+		Widget
+		#Slider
+			#id: Volume
+			#size_hint: (1, .15)
+			#pos_hint: {bottom + '100': .70}
+			#value: 50
+			#range: (0,100)
+			#step: 5
+			#volume: Volume.setter(self)
+		ActionBar:
+			app_icon: 'hammer.jpg'
+			pos_hint: {'bottom':1}
+			ActionView:
+				use_separator: True
+				ActionPrevious:
+					title: 'Editor Toolbar'
+					with_previous: False
+				ActionOverflow:
+				ActionButton:
+					text: 'Btn0'
+					#icon: 'atlas://data/images/defaulttheme/audio-volume-high' if s1.value > 65 else 'atlas://data/images/defaulttheme/audio-volume-medium' if 25 < s1.value < 70 else 'atlas://data/images/defaulttheme/audio-volume-low' if 0 < s1.value < 30 else 'atlas://data/images/defaulttheme/audio-volume-muted'
+				ActionButton:
+					text: 'Hammer On'
+				ActionButton:
+					text: 'Slide Off'
+				ActionButton:
+					text: "Thor"
+					icon: 'images/hammer.jpg'   
+				ActionButton:
+					text: 'Btn4'
+				ActionButton
+					#text: '%s' % int(s1.value)
+				ActionButton
+					icon: 'images/hammer.jpg'
 		
 
