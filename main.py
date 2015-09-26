@@ -46,7 +46,11 @@ from kivy.atlas import Atlas
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.slider import Slider
 from functools import partial
+<<<<<<< HEAD
 #from libs import browser
+=======
+from libs import browser
+>>>>>>> master
 
 import os
 i = 0
@@ -86,12 +90,21 @@ class SaveDialog(FloatLayout):
     #text_input = ObjectProperty(None)
     cancel = ObjectProperty(None)
 class TitleScreen(Screen):
+<<<<<<< HEAD
 	def on_enter(self):
 		self.ids.video_ai.add_widget(vp)
 		
 	def on_leave(self):
 		self.ids.video_ai.remove_widget(vp)
 		
+=======
+    def on_enter(self):
+        vp = VideoPlayer(source=os.path.join("videos",
+                            "testVideo.mp4"),
+                         options={'allow_stretch': True})
+        self.ids.video_ai.add_widget(vp)
+
+>>>>>>> master
 class CreateScreen(Screen):
     def on_enter(self):
         print('Enter create screen')
