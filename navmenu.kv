@@ -32,6 +32,7 @@
 			#size_hint_y: .75
 			#text: 'Slider value is %s' % int(s1.value) if s1.value else 'Slider not set'
 			background_normal: 'atlas://data/images/defaulttheme/audio-volume-high' if s1.value > 65 else 'atlas://data/images/defaulttheme/audio-volume-medium' if 25 < s1.value < 70 else 'atlas://data/images/defaulttheme/audio-volume-low' if 0 < s1.value < 30 else 'atlas://data/images/defaulttheme/audio-volume-muted'
+			background_down: 'atlas://data/images/defaulttheme/audio-volume-high' if s1.value > 65 else 'atlas://data/images/defaulttheme/audio-volume-medium' if 25 < s1.value < 70 else 'atlas://data/images/defaulttheme/audio-volume-low' if 0 < s1.value < 30 else 'atlas://data/images/defaulttheme/audio-volume-muted'
         Slider:
 			size_hint_x: .30
             id: s1
