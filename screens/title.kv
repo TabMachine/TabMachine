@@ -3,7 +3,7 @@
         Rectangle:
             pos: self.pos
             size: self.size
-            source: "images/white_vector.png"
+            source: "Assets/images/white_vector.png"
 	Label:#adds the title at the top
         size_hint: (None, None)
         font_name: 'bitMap'
@@ -25,13 +25,13 @@
     	text: 'Powered By:'
     	color: 0,0,0,1 #Font color
 		Button:
-			y: self.parent.y 
+			y: self.parent.y
 			x: self.parent.x + 120
 			background_color: (0.0, 0.0, 0.0, 0.0)
             on_press: app.open_browser("http://kivy.org/")
 	    	Image:
-	    		source: 'images/kivy-logo-black-256.png'
-				y: self.parent.y 
+	    		source: 'Assets/images/kivy-logo-black-256.png'
+				y: self.parent.y
 				x: self.parent.x
 
 	#Main Buttons
@@ -45,7 +45,7 @@
 	            on_press: root.manager.current = 'ViewScreen'
 	            background_color: (0.0, 0.0, 0.0, 0.0)
 	            Image:
-		            source: 'images/openFile.png'
+		            source: 'Assets/images/openFile.png'
 		            size: (self.parent.width, self.parent.height)
 		            allow_stretch: True
 		            y: self.parent.y + self.parent.height - 400
@@ -55,7 +55,7 @@
 	            on_press: root.manager.current = 'CreateScreen'
 	            background_color: (0.0, 0.0, 0.0, 0.0)
 	            Image:
-		            source: 'images/create.png'
+		            source: 'Assets/images/create.png'
 		            size: (self.parent.width, self.parent.height)
 		            allow_stretch: True
 		            y: self.parent.y + self.parent.height - 400

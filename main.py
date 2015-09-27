@@ -50,7 +50,7 @@ from functools import partial
 
 import os
 i = 0
-vp = VideoPlayer(source="videos/testVideo.mp4", options={'allow_stretch': True})
+vp = VideoPlayer(source="Assets/videos/testVideo.mp4", options={'allow_stretch': True})
 EventLoop.ensure_window()
 __version__ = '0.2.4'
 #Adds different fonts to the program can use the name in the label to use different
@@ -60,10 +60,10 @@ from kivy.core.text import LabelBase
 KIVY_FONTS = [
     {
         "name": "bitMap",
-        "fn_regular": "fonts/bitMap.ttf",
+        "fn_regular": "Assets/fonts/bitMap.ttf",
     }
 ]
-    
+
 for font in KIVY_FONTS:
     LabelBase.register(**font)
 # Constant declaration
@@ -88,10 +88,10 @@ class SaveDialog(FloatLayout):
 class TitleScreen(Screen):
 	def on_enter(self):
 		self.ids.video_ai.add_widget(vp)
-		
+
 	def on_leave(self):
 		self.ids.video_ai.remove_widget(vp)
-		
+
 class CreateScreen(Screen):
     def on_enter(self):
         print('Enter create screen')
@@ -257,7 +257,7 @@ class TabMachine(BoxLayout):
     def set_current_screen(self, jump_to):
         self.root.current = jump_to
 
-Builder.load_file("navmenu.kv")
+Builder.load_file("screens/navmenu.kv")
 class NavMenu(BoxLayout):
     slide_spinner = ObjectProperty(None)
 
@@ -290,7 +290,7 @@ class TabMachineApp(App):
 
     def on_pause(self):
         return True
-        
+
     def on_resume(self):
         pass
 
