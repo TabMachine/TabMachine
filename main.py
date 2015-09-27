@@ -47,6 +47,7 @@ from kivy.uix.scrollview import ScrollView
 from kivy.uix.slider import Slider
 from functools import partial
 #from libs import browser
+import webbrowser
 
 import os
 i = 0
@@ -285,8 +286,8 @@ class TabMachineApp(App):
     def build(self):
         return TabMachine()
 
-    def open_browser(self, url):
-        browser.open_url(url)
+    def open_browser(self):
+        webbrowser.open('http://kivy.org/')
 
     def on_pause(self):
         return True

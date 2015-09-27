@@ -17,22 +17,23 @@
     BoxLayout: #adds the video player
 		size_hint: (.2, .6)
 		id: video_ai
-		x: self.parent.x + 1100
-		y: app.font_size_large
+		x: self.parent.x
+		y: app.font_size_large * 2
 
-    Label: #Adds the powered by at the bottom right
-		size_hint: (.1, None)
+	Label:
+        id: urlLink
+        size_hint: (None, None)
+        x: self.width
     	text: 'Powered By:'
     	color: 0,0,0,1 #Font color
 		Button:
-			y: self.parent.y
-			x: self.parent.x + 120
 			background_color: (0.0, 0.0, 0.0, 0.0)
-            on_press: app.open_browser("http://kivy.org/")
-	    	Image:
-	    		source: 'Assets/images/kivy-logo-black-256.png'
-				y: self.parent.y
-				x: self.parent.x
+		    on_press: app.open_browser()
+		    x: self.parent.x + self.width
+			Image:
+				source: 'Assets/images/kivy-logo-black-256.png'
+				#y: self.parent.y
+				x: self.parent.x + self.width
 
 	#Main Buttons
     FloatLayout:
