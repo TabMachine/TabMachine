@@ -67,6 +67,7 @@ KIVY_FONTS = [
 
 for font in KIVY_FONTS:
     LabelBase.register(**font)
+
 # Constant declaration
 CHAR_WIDTH = 32
 CHAR_HEIGHT = CHAR_WIDTH
@@ -132,14 +133,14 @@ class TabArea(BoxLayout):
     tabCanvas = ObjectProperty(None)
     slide = ObjectProperty(None)
 
+    lineheight = 32
+    startheight = 6 * lineheight
+
     def drawtab(self, tab):
         # Required tab pre-processing:
         # 1. Between brackets (|) enforce a bar width (set number of characters)
 
         wid = self.tabCanvas
-
-        lineheight = 32
-        startheight = 6 * lineheight
 
         # Get path to current file to find atlas file
         curdir = os.path.dirname(os.path.realpath(__file__))
@@ -160,19 +161,19 @@ class TabArea(BoxLayout):
                     elif j == 0:
                         # T bar
                         Rectangle(source='atlas://Assets/main/tbar',
-                                  pos=(0, startheight-(i*lineheight)),
+                                  pos=(0, self.startheight-(i*self.lineheight)),
                                   size=(32, 32))
                     elif thischar == "|" and j > 0:
                         # Plus bar
                         #print("Making vertical line")
                         Rectangle(source='atlas://Assets/main/plusbar',
-                                  pos=(j*CHAR_WIDTH, startheight-(i*lineheight)),
+                                  pos=(j*CHAR_WIDTH, self.startheight-(i*self.lineheight)),
                                   size=(32, 32))
                     elif thischar == "-":
                         # Horizontal line
                         #print("Making horizontal line")
                         Rectangle(source='atlas://Assets/main/bar',
-                                  pos=(j*CHAR_WIDTH, startheight-(i*lineheight)),
+                                  pos=(j*CHAR_WIDTH, self.startheight-(i*self.lineheight)),
                                   size=(32, 32))
                     # Look for digits
                     else:
@@ -203,31 +204,36 @@ class TabArea(BoxLayout):
                                         nextfound = True
                                         combo = thischar + nextchar
                                         print("Making " + combo)
-                                        Rectangle(source=('atlas://Assets/main/norm' + combo),
-                                                  pos=(j*CHAR_WIDTH, startheight-(i*lineheight)),
-                                                  size=(32, 32))
+                                        self.drawNormNote(combo, j, i)
 
                                 # Wasn't double digit, draw it alone
                                 if not nextfound:
-                                    #print("Making " + thischar)
-                                    Rectangle(source=('atlas://Assets/main/norm' + thischar),
-                                              pos=(j*CHAR_WIDTH, startheight-(i*lineheight)),
-                                              size=(32, 32))
+                                    print("Making " + thischar)
+                                    self.drawNormNote(thischar, j, i)
 
                             # It's just a lonely single digit, draw it
                             else:
                                 #print("Making " + thischar)
-                                Rectangle(source=('atlas://Assets/main/norm' + thischar),
-                                          pos=(j*CHAR_WIDTH, startheight-(i*lineheight)),
-                                          size=(32, 32))
+                                self.drawNormNote(thischar, j, i)
                         else:
                             print("Unknown symbol or second digit")
                             Rectangle(source='atlas://Assets/main/bar',
-                                      pos=(j*CHAR_WIDTH, startheight-(i*lineheight)),
+                                      pos=(j*CHAR_WIDTH, self.startheight-(i*self.lineheight)),
                                       size=(32, 32))
 
             # Increment counter
             i += 1
+
+    def drawNormNote(self, num, xpos, ypos):
+        wid = self.tabCanvas
+
+        with wid.canvas:
+            Rectangle(source=('atlas://Assets/main/norm'),
+                      pos=(xpos*CHAR_WIDTH, self.startheight-(ypos*self.lineheight)),
+                      size=(32, 32))
+            Rectangle(source=('atlas://Assets/main/' + str(num)),
+                      pos=(xpos*CHAR_WIDTH, self.startheight-(ypos*self.lineheight)),
+                      size=(32, 32))
 
     def scroll_change(self, scrl, instance, value):
         scrl.scroll_x = value
