@@ -18,24 +18,17 @@ Config.set('graphics', 'width', '1400')
 Config.set('graphics', 'height', '400')
 
 from kivy.app import App
-from kivy.animation import Animation
-from kivy.clock import Clock
-from kivy.clock import mainthread
 from kivy.lang import Builder
-from kivy.logger import Logger
 from kivy.metrics import sp
 from kivy.properties import NumericProperty
 from kivy.properties import ObjectProperty
 from kivy.properties import StringProperty
-from kivy.uix.accordion import AccordionItem
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.button import Button
-from kivy.uix.codeinput import CodeInput
 from kivy.uix.label import Label
 from kivy.uix.image import Image
 from kivy.uix.popup import Popup
-from kivy.uix.scatter import Scatter
 from kivy.uix.videoplayer import VideoPlayer
 from kivy.uix.screenmanager import Screen
 from kivy.uix.screenmanager import ScreenManager
@@ -50,12 +43,12 @@ from kivy.graphics import Color, Rectangle, Line
 from kivy.atlas import Atlas
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.slider import Slider
-from functools import partial
 #from libs import browser
 import webbrowser
 
-import os
+# What is i and where is it used?
 i = 0
+
 vp = VideoPlayer(source="Assets/videos/testVideo.mp4", options={'allow_stretch': True})
 EventLoop.ensure_window()
 __version__ = '0.2.4'
@@ -84,10 +77,13 @@ class LoadDialog(FloatLayout):
     load = ObjectProperty(None)
     cancel = ObjectProperty(None)
 
+
 class SaveDialog(FloatLayout):
     save = ObjectProperty(None)
     #text_input = ObjectProperty(None)
     cancel = ObjectProperty(None)
+
+
 class TitleScreen(Screen):
 	def on_enter(self):
 		self.ids.video_ai.add_widget(vp)
@@ -95,9 +91,11 @@ class TitleScreen(Screen):
 	def on_leave(self):
 		self.ids.video_ai.remove_widget(vp)
 
+
 class CreateScreen(Screen):
     def on_enter(self):
         print('Enter create screen')
+
 
 class ViewScreen(Screen):
     loadfile = ObjectProperty(None)
@@ -130,7 +128,7 @@ class ViewScreen(Screen):
         self._popup.open()
 
 
-#main widget of the app
+# Main widget of the app
 class TabMachine(BoxLayout):
     def __init__(self, **kwargs):
         super(TabMachine, self).__init__(**kwargs)
@@ -152,7 +150,9 @@ class TabMachine(BoxLayout):
     def set_current_screen(self, jump_to):
         self.root.current = jump_to
 
+
 Builder.load_file("screens/navmenu.kv")
+
 class NavMenu(BoxLayout):
     slide_spinner = ObjectProperty(None)
 
@@ -171,6 +171,7 @@ class NavMenu(BoxLayout):
     def go_view(self):
         self.root.set_current_screen('ViewScreen')
 
+
 class TabMachineApp(App):
     font_size_regular = sp(25)
     font_size_large = font_size_regular * 2
@@ -188,6 +189,7 @@ class TabMachineApp(App):
 
     def on_resume(self):
         pass
+
 
 if __name__ == '__main__':
     TabMachineApp().run()
