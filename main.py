@@ -141,11 +141,10 @@ class TabArea(BoxLayout):
         # 1. Between brackets (|) enforce a bar width (set number of characters)
 
         wid = self.tabCanvas
+        lastNumRead = ''
 
         # Get path to current file to find atlas file
         curdir = os.path.dirname(os.path.realpath(__file__))
-        #test print
-        print(curdir + r"/Assets/main.atlas")
         atlas = Atlas(curdir + r"/Assets/main.atlas")
 
         i = 0
@@ -153,9 +152,7 @@ class TabArea(BoxLayout):
             # Parse by character, translating input to graphical output
             with wid.canvas:
                 for j in range(len(line)):
-                    print(j)
                     thischar = line[j]
-                    #print(thischar)
                     if thischar == '\n' or thischar == ':':
                         pass
                     elif j == 0:
@@ -174,6 +171,36 @@ class TabArea(BoxLayout):
                         #print("Making horizontal line")
                         Rectangle(source='atlas://Assets/main/bar',
                                   pos=(j*CHAR_WIDTH, self.startheight-(i*self.lineheight)),
+                                  size=(32, 32))
+                    elif thischar == "x" or thischar == "X":
+                        # Mute or X in tab
+                        Rectangle(source='atlas://Assets/main/mute',
+                                  pos=(j*CHAR_WIDTH, self.startheight-(i*self.lineheight)),
+                                  size=(32, 32))
+                    elif thischar == '\\' or thischar == '/':
+                        # Slide to next note, indicated with an arrow
+                        Rectangle(source='atlas://Assets/main/slide',
+                                  pos=(j*CHAR_WIDTH, self.startheight-(i*self.lineheight)),
+                                  size=(32, 32))
+                    elif thischar == '~':
+                        # Vibrato, wavy string to show pull in both directions
+                        Rectangle(source='atlas://Assets/main/vibrato',
+                                  pos=(j*CHAR_WIDTH, self.startheight-(i*self.lineheight)),
+                                  size=(32, 32))
+                    elif thischar == '*':
+                        # Squealie or harmonic
+                        Rectangle(source='atlas://Assets/main/bar',
+                                  pos=(j*CHAR_WIDTH, self.startheight-(i*self.lineheight)),
+                                  size=(32, 32))
+                        # Write over previous note with squealie outline
+                        backtrack = 1
+                        if int(lastNumRead) >= 10:
+                            backtrack = 2
+                        Rectangle(source='atlas://Assets/main/squealie',
+                                  pos=((j-backtrack)*CHAR_WIDTH, self.startheight-(i*self.lineheight)),
+                                  size=(32, 32))
+                        Rectangle(source=('atlas://Assets/main/' + lastNumRead),
+                                  pos=((j-backtrack)*CHAR_WIDTH, self.startheight-(i*self.lineheight)),
                                   size=(32, 32))
                     # Look for digits
                     else:
@@ -203,17 +230,19 @@ class TabArea(BoxLayout):
                                     if str(num) == nextchar and not nextfound:
                                         nextfound = True
                                         combo = thischar + nextchar
+                                        lastNumRead = combo
                                         print("Making " + combo)
                                         self.drawNormNote(combo, j, i)
 
                                 # Wasn't double digit, draw it alone
                                 if not nextfound:
+                                    lastNumRead = thischar
                                     print("Making " + thischar)
                                     self.drawNormNote(thischar, j, i)
 
                             # It's just a lonely single digit, draw it
                             else:
-                                #print("Making " + thischar)
+                                lastNumRead = thischar
                                 self.drawNormNote(thischar, j, i)
                         else:
                             print("Unknown symbol or second digit")
@@ -231,7 +260,7 @@ class TabArea(BoxLayout):
             Rectangle(source=('atlas://Assets/main/norm'),
                       pos=(xpos*CHAR_WIDTH, self.startheight-(ypos*self.lineheight)),
                       size=(32, 32))
-            Rectangle(source=('atlas://Assets/main/' + str(num)),
+            Rectangle(source=('atlas://Assets/main/' + num),
                       pos=(xpos*CHAR_WIDTH, self.startheight-(ypos*self.lineheight)),
                       size=(32, 32))
 
