@@ -2,8 +2,6 @@
 # @Description: Tab drawing class for the main application,
 #               to be implemented in the View Screen
 
-import os
-
 class Tab:
     tabdata = []
 
@@ -11,8 +9,13 @@ class Tab:
         self.tabfile = tabfile
         self.parse(tabfile)
 
-    def getTabData(self, x, y):
-        return self.tabdata[x][y]
+    # Description: Returns the entry at the x,y coordinate of the grid,
+    #   or just returns the 2d grid if no x,y coordinate is passed
+    def getTabData(self, x=-1, y=-1):
+        if x >= 0 and y >= 0:
+            return self.tabdata[x][y]
+        else:
+            return self.tabdata
 
     # Description: parse a txt file as a guitar tab, storing the corresponding
     #   image name for the Atlas in a 2d array, available for lookup.
@@ -90,12 +93,12 @@ class Tab:
                             # Wasn't double digit, draw it alone
                             if not nextfound:
                                 lastNumRead = thischar
-                                self.tabdata[i].append(['norm', combo])
+                                self.tabdata[i].append(['norm', thischar])
 
                         # It's just a lonely single digit, draw it
                         else:
                             lastNumRead = thischar
-                            self.tabdata[i].append(['norm', combo])
+                            self.tabdata[i].append(['norm', thischar])
                     else:
                         self.tabdata[i].append('bar')
             # Increment counter

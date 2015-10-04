@@ -115,12 +115,11 @@ class ViewScreen(Screen):
 
     def load(self, path, filename):
         #loads the file
-        tab = open(os.path.join(path, filename[0]))
+        tab = os.path.join(path, filename[0])
         self._popup.dismiss()
 
         # Draws tab in the ViewScreen's tabArea
         self.tabarea.drawtab(tab)
-        tab.close()
 
     def show_save(self):
         content = SaveDialog(save=self.save, cancel=self.dismiss_popup)
