@@ -93,8 +93,26 @@ class TitleScreen(Screen):
 
 
 class CreateScreen(Screen):
+    loadfile = ObjectProperty(None)
+    tabarea = ObjectProperty(None)
+
     def on_enter(self):
-        print('Enter create screen')
+        # starts the file manager when this screen is entered
+        content = LoadDialog(load=self.load, cancel=self.dismiss_popup)
+        self._popup = Popup(title="Load file", content=content, size_hint=(0.4, 0.8))
+        self._popup.open()
+
+    def dismiss_popup(self):
+        self._popup.dismiss()
+        self.manager.current = 'Title'
+
+    def load(self, path, filename):
+        #loads the file
+        tab = os.path.join(path, filename[0])
+        self._popup.dismiss()
+
+        # Draws tab in the CreateScreen's tabArea
+        self.tabarea.drawtab(tab)
 
 
 class ViewScreen(Screen):

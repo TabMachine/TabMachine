@@ -1,6 +1,5 @@
 # @Author: Daniel Grooms
-# @Description: Tab drawing class for the main application,
-#               to be implemented in the View Screen
+# @Description: Class to store tab information from incoming tab file
 
 class Tab:
     tabdata = []

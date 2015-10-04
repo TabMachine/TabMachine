@@ -7,49 +7,18 @@
 
 
 <CreateScreen>:
-	#label_widget: Dropdown.__self__
+    tabarea: tabarea
+
     BoxLayout:
-        id: title_layout
-        size_hint: None, None
         size: self.parent.size
-        Label:
-            id: test_label
-            text: 'This is the create screen'
+        orientation: 'vertical'
+        spacing: 200
 
-	#Edit Toolbar version 1.0
-	#BoxLayout:
-		#Widget
-		#Widget
-		#Button:
-			#id: Toolbar
-			#text: 'Tools'
-			#size_hint: (1, .10)
-			#on_release: Dropdown.open(self)
-		#Widget
-		#Widget
-		#DropDown:
-			#id: Dropdown
-			#auto_dismiss: False
-			#attach_to: Toolbar
-			#on_parent: self.dismiss()
-			#Button:
-				#text: 'Play'
-				#height: 45
-				#size_hint: (None, None)
-			#Button:
-				#text: 'Pause'
-				#height: 45
-				#size_hint: (None, None)
-			#Button:
-				#text: 'Help'
-				#height: 45
-				#size_hint: (None, None)
+        # Tab drawing area
+        TabArea:
+            id: tabarea
 
-	#Edit Toolbar version 2.0
-	BoxLayout:
-		orientation: "vertical"
-		Widget
-		Widget
+    	#Edit Toolbar version 2.0
 		#Slider
 			#id: Volume
 			#size_hint: (1, .15)
