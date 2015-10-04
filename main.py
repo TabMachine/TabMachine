@@ -94,7 +94,7 @@ class TitleScreen(Screen):
 
 class CreateScreen(Screen):
     loadfile = ObjectProperty(None)
-    tabarea = ObjectProperty(None)
+    tabCanvas = ObjectProperty(None)
 
     def on_enter(self):
         # starts the file manager when this screen is entered
@@ -111,8 +111,9 @@ class CreateScreen(Screen):
         tab = os.path.join(path, filename[0])
         self._popup.dismiss()
 
-        # Draws tab in the CreateScreen's tabArea
+        # Draws tab in the CreateScreen's tabArea, and makes it editable
         self.tabarea.drawtab(tab)
+        self.tabarea.setEditable()
 
 
 class ViewScreen(Screen):

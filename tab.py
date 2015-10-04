@@ -104,3 +104,4 @@ class Tab:
             i += 1
         # Close tab
         tab.close()
+        self.numRows = i + 1
