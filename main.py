@@ -120,6 +120,7 @@ class ViewScreen(Screen):
 
         # Draws tab in the ViewScreen's tabArea
         self.tabarea.drawtab(tab)
+        tab.close()
 
     def show_save(self):
         content = SaveDialog(save=self.save, cancel=self.dismiss_popup)
