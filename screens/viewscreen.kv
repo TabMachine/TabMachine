@@ -2,12 +2,57 @@
 
 <ViewScreen>:
 	tabarea: tabarea
-
 	# Editor Toolbar
 	BoxLayout:
 		size: self.parent.size
 		orientation: 'vertical'
 		spacing: 200
+
+		StackLayout:
+			#Control Menu Decided to make it a seperate menu from the nav menu
+		    #orientation: 'horizontal'
+			size_hint_y: None
+			y: root.height - 80
+			#spacing: 100
+
+			Label:
+				size_hint_x: .15
+				text: 'Control Panel'
+			Slider:
+				size_hint_x: .2
+            	id: s1
+            	value: 50
+            	range: (0,100)
+            	step: 5
+			CheckBox:
+				id: 'soundPlay'
+				group: 'soundPlay'
+				size_hint_x: .03
+	            on_active: root.on_checkbox_active(self)
+	        Label:
+	        	size_hint_x: .15
+				text: 'AutoScroll'
+	        CheckBox:
+	        	id: 'autoScroll'
+	        	group: 'autoScroll'
+	        	size_hint_x: .03
+	            on_active: root.on_checkbox_active(self)
+			ToggleButton:
+				size_hint_x: .2
+				text: 'play/pause'
+				on_press: root.play_pause()
+			Button:
+				size_hint_x: .04
+				#size_hint_y: .75
+				#text: 'Slider value is %s' % int(s1.value) if s1.value else 'Slider not set'
+				background_normal: 'atlas://data/images/defaulttheme/audio-volume-high' if s1.value > 65 else 'atlas://data/images/defaulttheme/audio-volume-medium' if 25 < s1.value < 70 else 'atlas://data/images/defaulttheme/audio-volume-low' if 0 < s1.value < 30 else 'atlas://data/images/defaulttheme/audio-volume-muted'
+				background_down: 'atlas://data/images/defaulttheme/audio-volume-high' if s1.value > 65 else 'atlas://data/images/defaulttheme/audio-volume-medium' if 25 < s1.value < 70 else 'atlas://data/images/defaulttheme/audio-volume-low' if 0 < s1.value < 30 else 'atlas://data/images/defaulttheme/audio-volume-muted'
+	        Slider:
+				size_hint_x: .2
+	            id: s1
+	            value: 50
+	            range: (0,100)
+	            step: 5
 
 		# Tab drawing area
 		TabArea:
@@ -89,7 +134,6 @@
             filters: ['*.txt']#filters so only .txt files appear.
         BoxLayout:
             size_hint_y: .15
-
             Button:
 				#size_hint: (.5,.20)
                 text: "Cancel"

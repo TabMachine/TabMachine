@@ -1,12 +1,7 @@
-#:import Factory kivy.factory.Factory
-
-<NavMenuOption@SpinnerOption>:
-    height: app.font_size_regular * 1.85
 
 <NavMenu>:
-	label_widget: s1.__self__
-    #slide_spinner: slide_spinner
-    id: slide_menu
+    #label_widget: s1.__self__
+    id: nav_menu
     orientation: 'horizontal'
     size_hint_y: None
     height: 70
@@ -15,28 +10,24 @@
             font_size: app.font_size_regular
             text: 'Create'
             size_hint_x: .1
-            on_press: slide_menu.go_create()
-        #Spinner:
-        #    id: slide_spinner
-        #    option_cls: Factory.get("NavMenuOption")
-        #    on_text: slide_menu.go_slide(self)
+            on_press: nav_menu.go_create()
         Button:
             font_size: app.font_size_regular
             text: 'View/Edit'
             size_hint_x: .1
-            on_press: slide_menu.go_view()
+            on_press: nav_menu.go_view()
         Widget:
 			size_hint_x: .45
-		Button:
-			size_hint_x: .04
-			#size_hint_y: .75
+		#Button:
+			#size_hint_x: .04
+			##size_hint_y: .75
 			#text: 'Slider value is %s' % int(s1.value) if s1.value else 'Slider not set'
-			background_normal: 'atlas://data/images/defaulttheme/audio-volume-high' if s1.value > 65 else 'atlas://data/images/defaulttheme/audio-volume-medium' if 25 < s1.value < 70 else 'atlas://data/images/defaulttheme/audio-volume-low' if 0 < s1.value < 30 else 'atlas://data/images/defaulttheme/audio-volume-muted'
-			background_down: 'atlas://data/images/defaulttheme/audio-volume-high' if s1.value > 65 else 'atlas://data/images/defaulttheme/audio-volume-medium' if 25 < s1.value < 70 else 'atlas://data/images/defaulttheme/audio-volume-low' if 0 < s1.value < 30 else 'atlas://data/images/defaulttheme/audio-volume-muted'
-        Slider:
-			size_hint_x: .30
-            id: s1
-            value: 50
-            range: (0,100)
-            step: 5
+			#background_normal: 'atlas://data/images/defaulttheme/audio-volume-#high' if s1.value > 65 else 'atlas://data/images/defaulttheme/audio-volume-medium' if 25 < s1.value < 70 else 'atlas://data/images/defaulttheme/audio-volume-low' if 0 < s1.value < 30 else 'atlas://data/images/defaulttheme/audio-volume-muted'
+			#background_down: 'atlas://data/images/defaulttheme/audio-volume-#high' if s1.value > 65 else 'atlas://data/images/defaulttheme/audio-volume-medium' if 25 < s1.#value < 70 else 'atlas://data/images/defaulttheme/audio-volume-low' if 0 < s1.value < 30 else 'atlas://data/images/defaulttheme/audio-volume-muted'
+       #Slider:
+			#size_hint_x: .30
+            #id: s1
+            #value: 50
+            #range: (0,100)
+            #step: 5
 

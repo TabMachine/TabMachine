@@ -29,6 +29,7 @@ from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.image import Image
 from kivy.uix.popup import Popup
+from kivy.uix.checkbox import CheckBox
 from kivy.uix.videoplayer import VideoPlayer
 from kivy.uix.screenmanager import Screen
 from kivy.uix.screenmanager import ScreenManager
@@ -117,10 +118,12 @@ class CreateScreen(Screen):
 
 
 class ViewScreen(Screen):
+    active_setting = ObjectProperty(None)
     loadfile = ObjectProperty(None)
     savefile = ObjectProperty(None)
     tabarea = ObjectProperty(None)
     curDirectory = os.path.dirname(os.path.realpath(__file__))
+    checkbox = CheckBox()
 
     def on_enter(self):
         # starts the file manager when this screen is entered
@@ -146,6 +149,12 @@ class ViewScreen(Screen):
         self._popup = Popup(title="Save file", content=content, size_hint=(0.9, 0.9))
         self._popup.open()
 
+    def on_checkbox_active(self, cb):
+        self.checkbox._toggle_active()
+
+    def play_pause(self):
+        print 'play/pause button pressed'
+
 
 # Main widget of the app
 class TabMachine(BoxLayout):
@@ -160,8 +169,8 @@ class TabMachine(BoxLayout):
         self.root.add_widget(CreateScreen(name='CreateScreen'))
         self.root.add_widget(ViewScreen(name='ViewScreen'))
 
-        self.slide_menu = NavMenu(root=self)
-        self.add_widget(self.slide_menu)
+        self.nav_menu = NavMenu(root=self)
+        self.add_widget(self.nav_menu)
         # Add the screen to the middle.
         #self.add_widget(self.content)
         self.add_widget(self.root)
@@ -173,16 +182,10 @@ class TabMachine(BoxLayout):
 Builder.load_file("screens/navmenu.kv")
 
 class NavMenu(BoxLayout):
-    slide_spinner = ObjectProperty(None)
 
     def __init__(self, root, **kwargs):
         super(NavMenu, self).__init__(**kwargs)
         self.root = root
-        #self.slide_spinner.values = screens
-
-    #def go_slide(self, spinner):
-    #    if spinner.text in screens:
-    #        self.root.set_current_slide(spinner.text)
 
     def go_create(self):
         self.root.set_current_screen('CreateScreen')
