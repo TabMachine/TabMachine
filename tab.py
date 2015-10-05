@@ -16,6 +16,22 @@ class Tab:
         else:
             return self.tabdata
 
+    def write(self, row, col, value):
+        tab = open(self.tabfile, 'r')
+        data = list(tab.read())
+        tab.close()
+
+        position = (self.tabLength + 1) * row + col
+        print("Changing file at pos: " + str(position))
+        print("Putting in " + value)
+        data[position] = value
+
+        tab = open(self.tabfile, 'wb')
+        for item in data:
+            tab.write(bytes(item, 'UTF-8'))
+
+        # Re-parse the tab
+
     # Description: parse a txt file as a guitar tab, storing the corresponding
     #   image name for the Atlas in a 2d array, available for lookup.
     #   Stores as either a string, or in the case of overlapping images,
@@ -28,6 +44,7 @@ class Tab:
 
         i = 0
         for line in tab:
+            self.tabLength = len(line) - 1
             # Parse by character, translating input to graphical output
             self.tabdata.append([])
             for j in range(len(line)):

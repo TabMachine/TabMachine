@@ -8,10 +8,14 @@ from functools import partial
 from tab import Tab
 
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.popup import Popup
 from kivy.uix.widget import Widget
+from kivy.uix.textinput import TextInput
+from kivy.uix.label import Label
 from kivy.properties import ObjectProperty
 from kivy.atlas import Atlas
 from kivy.graphics import Rectangle
+
 
 # The widget that holds the drawing of the tab
 class TabCanvas(Widget):
@@ -34,6 +38,7 @@ class TabArea(BoxLayout):
 
     # Determines if tab can be edited
     editable = False
+    inputText = ''
 
     def scroll_change(self, scrl, instance, value):
         scrl.scroll_x = value
@@ -46,6 +51,9 @@ class TabArea(BoxLayout):
         self.editable = True
         self.tabCanvas.setEditable()
 
+    def setInputText(self, instance, value):
+        self.inputText = str(value)
+
     def tabTouched(self, touch):
         print("Tab touched! X, Y: " + str(int(touch.x)) + ", " + str(int(touch.y)))
         # Get the indices of the corresponding character of the tab
@@ -57,12 +65,34 @@ class TabArea(BoxLayout):
 
         # To access (row, column) use (yIndex, xIndex)
 
-        # open input textbox
-
+        # Popup a kivy TextInput
+        textbox = TextInput(text='', multiline=False)
+        inputPopup = Popup(
+            title='Edit',
+            content = textbox,
+            size_hint = (None, None),
+            size = (100, 100)
+        )
+        textbox.bind(on_text_validate=inputPopup.dismiss)
+        textbox.bind(text=self.setInputText)
+        inputPopup.bind(
+            on_dismiss=partial(self.writeToTab, row=yIndex, col=xIndex)
+        )
+        inputPopup.open()
         # call tab to rewrite file at (yIndex, xIndex) with input if valid
 
-    def drawtab(self, tabfile):
-        self.tab = Tab(tabfile)
+    # Write input to the tab using tab's write function
+    # Hacky *args is there because of the on_dismiss bind in tabTouched
+    def writeToTab(self, instance, row, col):
+        # Validate tab input
+        # Write to tab
+        self.tab.write(row, col, self.inputText)
+        self.drawtab()
+
+    def drawtab(self, filename=''):
+        if filename != '':
+            self.tabFile = filename
+        self.tab = Tab(self.tabFile)
         grid = self.tab.getTabData()
 
         self.tabNumRows = len(grid) - 1
