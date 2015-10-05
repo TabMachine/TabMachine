@@ -28,7 +28,6 @@
 			#step: 5
 			#volume: Volume.setter(self)
 		ActionBar:
-			app_icon: 'hammer.jpg'
 			pos_hint: {'bottom':1}
 			ActionView:
 				use_separator: True
@@ -37,18 +36,138 @@
 					with_previous: False
 				ActionOverflow:
 				ActionButton:
-					text: 'Btn0'
-					#icon: 'atlas://data/images/defaulttheme/audio-volume-high' if s1.value > 65 else 'atlas://data/images/defaulttheme/audio-volume-medium' if 25 < s1.value < 70 else 'atlas://data/images/defaulttheme/audio-volume-low' if 0 < s1.value < 30 else 'atlas://data/images/defaulttheme/audio-volume-muted'
+					text_size: (85,0)
+					on_press: print('hammer on')
+					text: '            '
+					BoxLayout:
+						pos: self.parent.pos
+						size: self.parent.size
+						#orientation: 'tb-rl'
+						orientation: 'vertical'
+						Label:
+							size_hint_x: 1.0
+							size_hint_y: .25
+							text: 'Hammer On'
+							pos_hint_x: .85
+						Image:
+							source: 'atlas://Assets/main/hammeron'
+							size_hint: (1,.35)
 				ActionButton:
-					text: 'Hammer On'
+					text_size: (85,0)
+					on_press: print('pull off')
+					text: '            '
+					BoxLayout:
+						pos: self.parent.pos
+						size: self.parent.size
+						#orientation: 'tb-rl'
+						orientation: 'vertical'
+						Label:
+							size_hint_x: 1.0
+							size_hint_y: .25
+							text: 'Pull Off'
+							pos_hint_x: .85
+						Image:
+							source: 'atlas://Assets/main/pulloff'
+							size_hint: (1,.35)
 				ActionButton:
-					text: 'Slide Off'
+					text_size: (85,0)
+					on_press: print('slide')
+					text: '            '
+					BoxLayout:
+						pos: self.parent.pos
+						size: self.parent.size
+						#orientation: 'tb-rl'
+						orientation: 'vertical'
+						Label:
+							size_hint_x: 1.0
+							size_hint_y: .25
+							text: 'Slide'
+							pos_hint_x: .85
+						Image:
+							source: 'atlas://Assets/main/slide'
+							size_hint: (1,.35)
 				ActionButton:
-					text: "Thor"
-					icon: 'Assets/images/hammer.jpg'
+					text_size: (85,0)
+					on_press: print('Bend Up')
+					text: '            '
+					BoxLayout:
+						pos: self.parent.pos
+						size: self.parent.size
+						#orientation: 'tb-rl'
+						orientation: 'vertical'
+						Label:
+							size_hint_x: 1.0
+							size_hint_y: .25
+							text: 'Bend Up'
+							pos_hint_x: .85
+						Image:
+							source: 'atlas://Assets/main/bendup'
+							size_hint: (1,.35)
 				ActionButton:
-					text: 'Btn4'
-				ActionButton
-					#text: '%s' % int(s1.value)
-				ActionButton
-					icon: 'Assets/images/hammer.jpg'
+					text_size: (85,0)
+					on_press: print('bend down')
+					text: '            '
+					BoxLayout:
+						pos: self.parent.pos
+						size: self.parent.size
+						#orientation: 'tb-rl'
+						orientation: 'vertical'
+						Label:
+							size_hint_x: 1.0
+							size_hint_y: .25
+							text: 'Bend Down'
+							pos_hint_x: .85
+						Image:
+							source: 'atlas://Assets/main/benddown'
+							size_hint: (1,.35)
+				ActionButton:
+					text_size: (85,0)
+					on_press: print('bend note')
+					text: '            '
+					BoxLayout:
+						pos: self.parent.pos
+						size: self.parent.size
+						#orientation: 'tb-rl'
+						orientation: 'vertical'
+						Label:
+							size_hint_x: 1.0
+							size_hint_y: .25
+							text: 'Bend Note'
+							pos_hint_x: .85
+						Image:
+							source: 'atlas://Assets/main/bendnote'
+							size_hint: (1,.35)
+				ActionButton:
+					text_size: (85,0)
+					on_press: print('vibrato')
+					text: '            '
+					BoxLayout:
+						pos: self.parent.pos
+						size: self.parent.size
+						#orientation: 'tb-rl'
+						orientation: 'vertical'
+						Label:
+							size_hint_x: 1.0
+							size_hint_y: .25
+							text: 'Vibrato'
+							pos_hint_x: .85
+						Image:
+							source: 'atlas://Assets/main/vibrato'
+							size_hint: (1,.35)
+				ActionButton:
+					text_size: (85,0)
+					on_press: print('squealie')
+					text: '            '
+					BoxLayout:
+						pos: self.parent.pos
+						size: self.parent.size
+						#orientation: 'tb-rl'
+						orientation: 'vertical'
+						Label:
+							size_hint_x: 1.0
+							size_hint_y: .25
+							text: 'Squealie'
+							pos_hint_x: .85
+						Image:
+							source: 'atlas://Assets/main/squealie'
+							size_hint: (1,.35)
