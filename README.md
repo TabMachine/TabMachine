@@ -13,4 +13,4 @@ A tab visualizer, editor, and creator
 - Signal processing to translate input audio to guitar tabs in real time
 - Metronome to play with auto-scrolling tab
 
-###### The Tab Machine is a senior design project by Daniel Grooms, Matt Rustemeyer, and Ross Rabadeux. 
+###### The Tab Machine is a senior design project by Daniel Grooms, Matt Rustemeyer, and Ross Rabaduex. 
