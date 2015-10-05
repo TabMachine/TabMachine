@@ -153,7 +153,7 @@ class ViewScreen(Screen):
         self.checkbox._toggle_active()
 
     def play_pause(self):
-        print 'play/pause button pressed'
+        print ('play/pause button pressed')
 
 
 # Main widget of the app
