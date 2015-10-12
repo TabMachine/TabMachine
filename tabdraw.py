@@ -19,10 +19,7 @@ from kivy.graphics import Rectangle
 
 # The widget that holds the drawing of the tab
 class TabCanvas(Widget):
-    editable = False
-
-    def setEditable(self):
-        self.editable = True
+    pass
 
 
 # The area holding the tab canvas and the slider
@@ -35,6 +32,9 @@ class TabArea(BoxLayout):
     CHAR_WIDTH = 32
     CHAR_HEIGHT = CHAR_WIDTH
     ATLAS_PREFIX = 'atlas://Assets/main/'
+    ACCEPT_CHARS = ['|', '-', 'x', 'X', '\\', '/', '~', '*']
+    for num in range(25):
+        ACCEPT_CHARS.append(str(num))
 
     # Determines if tab can be edited
     editable = False
@@ -47,46 +47,48 @@ class TabArea(BoxLayout):
         if value >= 0:
             slide.value = value
 
-    def setEditable(self):
-        self.editable = True
-        self.tabCanvas.setEditable()
+    def setEditable(self, setter=True):
+        self.editable = setter
 
     def setInputText(self, instance, value):
         self.inputText = str(value)
 
     def tabTouched(self, touch):
-        # Get the indices of the corresponding character of the tab
-        xpos = int(touch.x)
-        ypos = int(touch.y)
-        xIndex = (xpos // 32)
-        yIndex = self.tabNumRows - (ypos // 32)
-        print("Coords: " + str(yIndex) + " " + str(xIndex))
+        if self.editable:
+            # Get the indices of the corresponding character of the tab
+            xpos = int(touch.x)
+            ypos = int(touch.y)
+            xIndex = (xpos // 32)
+            yIndex = self.tabNumRows - (ypos // 32)
+            print("Coords: " + str(yIndex) + " " + str(xIndex))
 
-        # To access (row, column) use (yIndex, xIndex)
+            # To access (row, column) use (yIndex, xIndex)
 
-        # Popup a kivy TextInput
-        textbox = TextInput(text='', multiline=False)
-        inputPopup = Popup(
-            title='Edit',
-            content = textbox,
-            size_hint = (None, None),
-            size = (100, 100)
-        )
-        textbox.bind(on_text_validate=inputPopup.dismiss)
-        textbox.bind(text=self.setInputText)
-        inputPopup.bind(
-            on_dismiss=partial(self.writeToTab, row=yIndex, col=xIndex)
-        )
-        inputPopup.open()
-        # call tab to rewrite file at (yIndex, xIndex) with input if valid
+            # Popup a kivy TextInput
+            textbox = TextInput(text='', multiline=False)
+            inputPopup = Popup(
+                title='Edit',
+                content = textbox,
+                size_hint = (None, None),
+                size = (100, 100)
+            )
+            textbox.bind(on_text_validate=inputPopup.dismiss)
+            textbox.bind(text=self.setInputText)
+            inputPopup.bind(
+                on_dismiss=partial(self.writeToTab, row=yIndex, col=xIndex)
+            )
+            inputPopup.open()
+            # call tab to rewrite file at (yIndex, xIndex) with input if valid
 
     # Write input to the tab using tab's write function
     # Hacky *args is there because of the on_dismiss bind in tabTouched
     def writeToTab(self, instance, row, col):
-        # Validate tab input
-        # Write to tab
-        self.tab.write(row, col, self.inputText)
-        self.drawtab()
+        if self.editable:
+            # Validate input
+            if self.inputText in self.ACCEPT_CHARS:
+                # Write to tab
+                self.tab.write(row, col, self.inputText)
+                self.drawtab()
 
     def drawtab(self, filename=''):
         if filename != '':

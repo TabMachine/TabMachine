@@ -24,15 +24,10 @@ class Tab:
         position = (self.tabLength + 2) * row + col
         data[position] = value
 
-        print("Tab length: " + str(self.tabLength))
-        print("Row and col: " + str(row) + ", " + str(col))
-        print("Calculated position: " + str(position))
-
         tab = open(self.tabfile, 'wb')
         for item in data:
             tab.write(bytes(item, 'UTF-8'))
 
-        # Re-parse the tab
 
     # Description: parse a txt file as a guitar tab, storing the corresponding
     #   image name for the Atlas in a 2d array, available for lookup.
