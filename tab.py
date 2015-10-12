@@ -21,10 +21,12 @@ class Tab:
         data = list(tab.read())
         tab.close()
 
-        position = (self.tabLength + 1) * row + col
-        print("Changing file at pos: " + str(position))
-        print("Putting in " + value)
+        position = (self.tabLength + 2) * row + col
         data[position] = value
+
+        print("Tab length: " + str(self.tabLength))
+        print("Row and col: " + str(row) + ", " + str(col))
+        print("Calculated position: " + str(position))
 
         tab = open(self.tabfile, 'wb')
         for item in data:

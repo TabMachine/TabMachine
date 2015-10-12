@@ -55,7 +55,6 @@ class TabArea(BoxLayout):
         self.inputText = str(value)
 
     def tabTouched(self, touch):
-        print("Tab touched! X, Y: " + str(int(touch.x)) + ", " + str(int(touch.y)))
         # Get the indices of the corresponding character of the tab
         xpos = int(touch.x)
         ypos = int(touch.y)
@@ -101,7 +100,6 @@ class TabArea(BoxLayout):
             for i in range(len(grid)):
                 for j in range(len(grid[i])):
                     if isinstance(grid[i][j], str):
-                        print(self.ATLAS_PREFIX+grid[i][j])
                         Rectangle(
                             source=self.ATLAS_PREFIX+grid[i][j],
                             pos=(j*self.CHAR_WIDTH, (self.tabNumRows-i)*self.CHAR_HEIGHT),
