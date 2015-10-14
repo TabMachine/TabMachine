@@ -51,7 +51,9 @@ import webbrowser
 
 # What is i and where is it used?
 i = 0
-global move_value 
+
+# One dead puppy per global
+global move_value
 move_value = 0
 vp = VideoPlayer(source="Assets/videos/testVideo.mp4", options={'allow_stretch': True})
 EventLoop.ensure_window()
@@ -77,11 +79,13 @@ for screen in screens:
     kv_file = "{}.kv".format(screen.lower())
     Builder.load_file(os.path.join("screens", kv_file))
 
+
 class LoadDialog(FloatLayout):
     curdir = os.path.dirname(os.path.realpath(__file__))
     # Need to use curdir to open THIS folder location
     load = ObjectProperty(None)
     cancel = ObjectProperty(None)
+
 
 class SaveDialog(FloatLayout):
     curSavefile = ""
@@ -89,12 +93,18 @@ class SaveDialog(FloatLayout):
     text_input = ObjectProperty(None)
     cancel = ObjectProperty(None)
 
+
 class TitleScreen(Screen):
 	def on_enter(self):
 		self.ids.video_ai.add_widget(vp)
 
 	def on_leave(self):
 		self.ids.video_ai.remove_widget(vp)
+
+
+class NewOrOldFile(BoxLayout):
+    newTab = ObjectProperty(None)
+    oldTab = ObjectProperty(None)
 
 
 class CreateScreen(Screen):
@@ -110,16 +120,54 @@ class CreateScreen(Screen):
     text_input = ObjectProperty(None)
     tabCanvas = ObjectProperty(None)
 
+    # Basic blank tab for new tab files
+    blankTab = """|--------------------|
+|--------------------|
+|--------------------|
+|--------------------|
+|--------------------|
+|--------------------|"""
+
+    # When entering create screen, prompts user to pick an existing file to edit
+    #  or to create a new file
     def on_enter(self):
-        # starts the file manager when this screen is entered
-        content = LoadDialog(load=self.load, cancel=self.dismiss_popup)
-        self._popup = Popup(title="Load file", content=content, size_hint=(0.4, 0.8))
+        content = NewOrOldFile(newTab=self.newTab, oldTab=self.oldTab)
+        self._popup = Popup(title="File Type", content=content, size_hint=(0.4, 0.4))
         self._popup.open()
 
+    # Allow user to pick location for the new file and give it a name
+    def newTab(self):
+        print("Open a new tab")
+        content = SaveDialog(save=self.makeBlankTab, cancel=self.dismiss_popup)
+        self._popup.dismiss()
+        self._popup = Popup(title="Make a New Tab", content=content, size_hint=(0.4, 0.8))
+        self._popup.open()
+
+    # Writes to the blank tab the user creates, and loads it into edit mode
+    def makeBlankTab(self, path, filename):
+        if filename[-4::] != ".txt":
+            filename += ".txt"
+        with open(os.path.join(path, filename), 'w') as stream:
+            print(filename)
+            stream.write(self.blankTab)
+            self._popup.dismiss()
+        # Hacky filename in brackets to get load to work
+        self.load(path, [filename])
+
+    # Opens an existing tab into edit mode
+    def oldTab(self):
+        print("Open an existing tab")
+        content = LoadDialog(load=self.load, cancel=self.dismiss_popup)
+        self._popup.dismiss()
+        self._popup = Popup(title="Load File", content=content, size_hint=(0.4, 0.8))
+        self._popup.open()
+
+    # The popup is dismissed and the title screen is shown
     def dismiss_popup(self):
         self._popup.dismiss()
         self.manager.current = 'Title'
 
+    # Load the file given a path and the filename
     def load(self, path, filename):
         #loads the file
         tab = os.path.join(path, filename[0])
@@ -129,41 +177,46 @@ class CreateScreen(Screen):
         self.tabarea.drawtab(tab)
         self.tabarea.setEditable()
 
+    # Allow user to save a file
     def show_save(self):
         content = SaveDialog(save=self.save, cancel=self.dismiss_popupSave)
-        print(self.save)
         self._popup = Popup(title="Save file", content=content, size_hint=(0.9, 0.9))
         self._popup.open()
 
+    # Tester file-saving function
     def save(self, path, filename):
         with open(os.path.join(path, filename), 'w') as stream:
-            print filename
+            print(filename)
             stream.write(filename)
             self.dismiss_popupSave()
 
     def on_checkbox_active(self, *args):
-        print args[2]
+        print(args[2])
         if args[2]:
-            print "active"
+            print("active")
         self.checkbox._toggle_active()
 
     def play_pause(self, *args):
         if args[0].state == 'down':
-            print self.bpsSlider.value
+            print(self.bpsSlider.value)
             #beeps self.bpsSlider per second
             Clock.schedule_interval(self.play_metro, 60/(self.bpsSlider.value))
         else:
             Clock.unschedule(self.play_metro)
             sound.stop()
 
+    # Play the metronome
     def play_metro(self,dt):
         #Trying to get the scroll view to be animated by button press
         #right now just moving the slider
+
+        # One dead puppy per global
         global move_value
         move_value += .01
         self.tabarea.slide.value = move_value
         sound.volume =int(self.volSlider.value)
         sound.play()
+
 
 class ViewScreen(Screen):
     slide = ObjectProperty(None)
@@ -205,19 +258,14 @@ class ViewScreen(Screen):
 
     def save(self, path, filename):
         with open(os.path.join(path, filename), 'w') as stream:
-            print filename
             stream.write(filename)
             self.dismiss_popupSave()
 
     def on_checkbox_active(self, *args):
-        print args[2]
-        if args[2]:
-            print "active"
         self.checkbox._toggle_active()
 
     def play_pause(self, *args):
         if args[0].state == 'down':
-            print self.bpsSlider.value
             #beeps self.bpsSlider per second
             Clock.schedule_interval(self.play_metro, 60/(self.bpsSlider.value))
         else:
@@ -227,6 +275,7 @@ class ViewScreen(Screen):
     def play_metro(self,dt):
         #Trying to get the scroll view to be animated by button press
         #right now just moving the slider
+        # One dead puppy per global
         global move_value
         move_value += .01
         #move_value = .5
@@ -259,6 +308,7 @@ class TabMachine(BoxLayout):
 
 
 Builder.load_file("screens/navmenu.kv")
+
 
 class NavMenu(BoxLayout):
 

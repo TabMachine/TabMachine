@@ -4,6 +4,7 @@
 class Tab:
     tabdata = []
 
+    # Constructor for a Tab object, which takes a file containing a tab
     def __init__(self, tabfile):
         self.tabfile = tabfile
         self.parse(tabfile)
@@ -16,6 +17,7 @@ class Tab:
         else:
             return self.tabdata
 
+    # Write any changes to the tab file
     def write(self, row, col, value):
         tab = open(self.tabfile, 'r')
         data = list(tab.read())
@@ -27,7 +29,6 @@ class Tab:
         tab = open(self.tabfile, 'wb')
         for item in data:
             tab.write(bytes(item, 'UTF-8'))
-
 
     # Description: parse a txt file as a guitar tab, storing the corresponding
     #   image name for the Atlas in a 2d array, available for lookup.

@@ -56,7 +56,7 @@
 	        	group: 'autoScroll'
 	        	size_hint_x: .03
 	            on_active: root.on_checkbox_active(self, *args)
-			
+
 			Button:
 				size_hint_x: .04
 				#size_hint_y: .75
@@ -227,3 +227,17 @@
 						Image:
 							source: 'atlas://Assets/main/squealie'
 							size_hint: (1,.35)
+
+<NewOrOldFile>:
+    BoxLayout:
+        padding: 20
+        spacing: 60
+        size: root.size
+        pos: root.pos
+        orientation: "horizontal"
+        Button:
+            text: "Create New Tab"
+            on_release: root.newTab()
+        Button:
+            text: "Edit Existing Tab"
+            on_release: root.oldTab()

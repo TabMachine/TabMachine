@@ -47,12 +47,16 @@ class TabArea(BoxLayout):
         if value >= 0:
             slide.value = value
 
+    # Set the tab as editable or not editable
+    # Allows user to alter the tab depending on the value
     def setEditable(self, setter=True):
         self.editable = setter
 
+    # A callback function to get the user input from the textInput module
     def setInputText(self, instance, value):
         self.inputText = str(value)
 
+    # Detects a user click on the tab, and allows editing if the option is set
     def tabTouched(self, touch):
         if self.editable:
             # Get the indices of the corresponding character of the tab
@@ -81,7 +85,6 @@ class TabArea(BoxLayout):
             # call tab to rewrite file at (yIndex, xIndex) with input if valid
 
     # Write input to the tab using tab's write function
-    # Hacky *args is there because of the on_dismiss bind in tabTouched
     def writeToTab(self, instance, row, col):
         if self.editable:
             # Validate input
@@ -90,6 +93,7 @@ class TabArea(BoxLayout):
                 self.tab.write(row, col, self.inputText)
                 self.drawtab()
 
+    # Draws the tab to the screen from the given file using a Tab object
     def drawtab(self, filename=''):
         if filename != '':
             self.tabFile = filename
