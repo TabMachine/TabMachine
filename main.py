@@ -20,6 +20,7 @@ Config.set('graphics', 'height', '400')
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.metrics import sp
+from kivy.clock import Clock
 from kivy.properties import NumericProperty
 from kivy.properties import ObjectProperty
 from kivy.properties import StringProperty
@@ -44,15 +45,19 @@ from kivy.graphics import Color, Rectangle, Line
 from kivy.atlas import Atlas
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.slider import Slider
+from kivy.core.audio import SoundLoader, Sound
 #from libs import browser
 import webbrowser
 
 # What is i and where is it used?
 i = 0
-
+global move_value 
+move_value = 0
 vp = VideoPlayer(source="Assets/videos/testVideo.mp4", options={'allow_stretch': True})
 EventLoop.ensure_window()
+sound = SoundLoader.load('Assets/sounds/beep.mp3')
 __version__ = '0.2.4'
+count = 0
 #Adds different fonts to the program can use the name in the label to use different
 #fonts Ex. Label:
 #          font_name: name_of_font
@@ -78,12 +83,11 @@ class LoadDialog(FloatLayout):
     load = ObjectProperty(None)
     cancel = ObjectProperty(None)
 
-
 class SaveDialog(FloatLayout):
+    curSavefile = ""
     save = ObjectProperty(None)
-    #text_input = ObjectProperty(None)
+    text_input = ObjectProperty(None)
     cancel = ObjectProperty(None)
-
 
 class TitleScreen(Screen):
 	def on_enter(self):
@@ -94,7 +98,16 @@ class TitleScreen(Screen):
 
 
 class CreateScreen(Screen):
+    slide = ObjectProperty(None)
+    volSlider = ObjectProperty(None)
+    bpsSlider = ObjectProperty(None)
+    active_setting = ObjectProperty(None)
     loadfile = ObjectProperty(None)
+    savefile = ObjectProperty(None)
+    tabarea = ObjectProperty(None)
+    curDirectory = os.path.dirname(os.path.realpath(__file__))
+    checkbox = CheckBox()
+    text_input = ObjectProperty(None)
     tabCanvas = ObjectProperty(None)
 
     def on_enter(self):
@@ -116,44 +129,110 @@ class CreateScreen(Screen):
         self.tabarea.drawtab(tab)
         self.tabarea.setEditable()
 
+    def show_save(self):
+        content = SaveDialog(save=self.save, cancel=self.dismiss_popupSave)
+        print(self.save)
+        self._popup = Popup(title="Save file", content=content, size_hint=(0.9, 0.9))
+        self._popup.open()
+
+    def save(self, path, filename):
+        with open(os.path.join(path, filename), 'w') as stream:
+            print filename
+            stream.write(filename)
+            self.dismiss_popupSave()
+
+    def on_checkbox_active(self, *args):
+        print args[2]
+        if args[2]:
+            print "active"
+        self.checkbox._toggle_active()
+
+    def play_pause(self, *args):
+        if args[0].state == 'down':
+            print self.bpsSlider.value
+            #beeps self.bpsSlider per second
+            Clock.schedule_interval(self.play_metro, 60/(self.bpsSlider.value))
+        else:
+            Clock.unschedule(self.play_metro)
+            sound.stop()
+
+    def play_metro(self,dt):
+        #Trying to get the scroll view to be animated by button press
+        #right now just moving the slider
+        global move_value
+        move_value += .01
+        self.tabarea.slide.value = move_value
+        sound.volume =int(self.volSlider.value)
+        sound.play()
 
 class ViewScreen(Screen):
+    slide = ObjectProperty(None)
+    volSlider = ObjectProperty(None)
+    bpsSlider = ObjectProperty(None)
     active_setting = ObjectProperty(None)
     loadfile = ObjectProperty(None)
     savefile = ObjectProperty(None)
     tabarea = ObjectProperty(None)
     curDirectory = os.path.dirname(os.path.realpath(__file__))
     checkbox = CheckBox()
+    text_input = ObjectProperty(None)
 
     def on_enter(self):
         # starts the file manager when this screen is entered
-        content = LoadDialog(load=self.load, cancel=self.dismiss_popup)
+        content = LoadDialog(load=self.load, cancel=self.dismiss_popupLoad)
         self._popup = Popup(title="Load file", content=content, size_hint=(0.4, 0.8))
         self._popup.open()
 
-    def dismiss_popup(self):
+    def dismiss_popupLoad(self):
         self._popup.dismiss()
         self.manager.current = 'Title'
+
+    def dismiss_popupSave(self):
+        self._popup.dismiss()
 
     def load(self, path, filename):
         #loads the file
         tab = os.path.join(path, filename[0])
         self._popup.dismiss()
-
         # Draws tab in the ViewScreen's tabArea
         self.tabarea.drawtab(tab)
 
     def show_save(self):
-        content = SaveDialog(save=self.save, cancel=self.dismiss_popup)
+        content = SaveDialog(save=self.save, cancel=self.dismiss_popupSave)
         print(self.save)
         self._popup = Popup(title="Save file", content=content, size_hint=(0.9, 0.9))
         self._popup.open()
 
-    def on_checkbox_active(self, cb):
+    def save(self, path, filename):
+        with open(os.path.join(path, filename), 'w') as stream:
+            print filename
+            stream.write(filename)
+            self.dismiss_popupSave()
+
+    def on_checkbox_active(self, *args):
+        print args[2]
+        if args[2]:
+            print "active"
         self.checkbox._toggle_active()
 
-    def play_pause(self):
-        print ('play/pause button pressed')
+    def play_pause(self, *args):
+        if args[0].state == 'down':
+            print self.bpsSlider.value
+            #beeps self.bpsSlider per second
+            Clock.schedule_interval(self.play_metro, 60/(self.bpsSlider.value))
+        else:
+            Clock.unschedule(self.play_metro)
+            sound.stop()
+
+    def play_metro(self,dt):
+        #Trying to get the scroll view to be animated by button press
+        #right now just moving the slider
+        global move_value
+        move_value += .01
+        #move_value = .5
+        self.tabarea.slide.value = move_value
+        sound.volume =int(self.volSlider.value)
+        sound.play()
 
 
 # Main widget of the app
