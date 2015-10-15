@@ -2,7 +2,6 @@
 ######A tab visualizer, editor, and creator
 
 _____________________________________________
----------------------------------------------
 
 #### Overview
 ![Sample Tab Screenshot](https://github.com/TabMachine/TabMachine/blob/master/Assets/screenshots/10-15-2015.png)
@@ -25,4 +24,4 @@ ______________________________________________
 
 _____________________________________________
 
-###### The Tab Machine is a senior design project by Daniel Grooms, Matt Rustemeyer, and Ross Rabaduex. 
+###### The Tab Machine is a senior design project by Daniel Grooms, Matt Rustemeyer, and Ross Rabaduex at the Missouri University of Science and Technology. 
