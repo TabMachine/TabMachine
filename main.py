@@ -130,8 +130,8 @@ class CreateScreen(Screen):
     #  or to create a new file
     def on_enter(self):
 		# starts the file manager when this screen is entered
-        self.edit_toolbar = EditToolbar(root=self)
-        self.add_widget(self.edit_toolbar)
+        #self.tabarea.edit_toolbar = EditToolbar(root=self)
+        #self.add_widget(self.tabarea.edit_toolbar)
         content = NewOrOldFile(newTab=self.newTab, oldTab=self.oldTab)
         self._popup = Popup(title="File Type", content=content, size_hint=(0.4, 0.4))
         self._popup.open()
@@ -325,11 +325,7 @@ class NavMenu(BoxLayout):
     def go_view(self):
         self.root.set_current_screen('ViewScreen')
 
-Builder.load_file("screens/edittoolbar.kv")
-class EditToolbar(ActionBar):
-    def __init__(self, root, **kwargs):
-        super(EditToolbar, self).__init__(**kwargs)
-        self.root = root
+
 		
 class TabMachineApp(App):
     font_size_regular = sp(25)
