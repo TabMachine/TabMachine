@@ -110,18 +110,23 @@
 	tabCanvas: tabCanvas
 	slide: slide
 	scrlv: scrlv
+	mainBoxLayout: mainBoxLayout
 
 	BoxLayout:
 		orientation: 'vertical'
-		ScrollView:
-			id: scrlv
-			scroll_x: (root.slider_change, root.slide)
-			bar_width: 0
-			do_scroll_y: False
-			TabCanvas:
-				id: tabCanvas
-				on_touch_down: tabArea.tabTouched(args[1])
-				size_hint_x: 5
+		BoxLayout:
+			id: mainBoxLayout
+			orientation: 'horizontal'
+			ScrollView:
+				id: scrlv
+				size_hint_x: 0.9
+				scroll_x: (root.slider_change, root.slide)
+				bar_width: 0
+				do_scroll_y: False
+				TabCanvas:
+					id: tabCanvas
+					on_touch_down: tabArea.tabTouched(args[1])
+					size_hint_x: 5
 		Slider:
 			id: slide
 			value: (root.scroll_change, root.scrlv)

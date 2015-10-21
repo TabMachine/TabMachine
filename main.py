@@ -121,12 +121,10 @@ class CreateScreen(Screen):
     tabCanvas = ObjectProperty(None)
 
     # Basic blank tab for new tab files
-    blankTab = """|--------------------|
-|--------------------|
-|--------------------|
-|--------------------|
-|--------------------|
-|--------------------|"""
+    # Must not have extra lines! If it has 6 strings, use 6 lines!
+    blankBarOneString = "|--------------------|"
+    blankTab = blankBarOneString
+    blankTab += ("\n" + blankBarOneString) * 5
 
     # When entering create screen, prompts user to pick an existing file to edit
     #  or to create a new file
@@ -173,7 +171,8 @@ class CreateScreen(Screen):
         tab = os.path.join(path, filename[0])
         self._popup.dismiss()
 
-        # Draws tab in the CreateScreen's tabArea, and makes it editable
+        # Draws tab in the CreateScreen's tabArea, which is editable by default
+        #   for the Create Screen
         self.tabarea.drawtab(tab)
         self.tabarea.setEditable()
 
@@ -232,6 +231,7 @@ class ViewScreen(Screen):
 
     def on_enter(self):
         # starts the file manager when this screen is entered
+        self.tabarea.setEditable(False)
         content = LoadDialog(load=self.load, cancel=self.dismiss_popupLoad)
         self._popup = Popup(title="Load file", content=content, size_hint=(0.4, 0.8))
         self._popup.open()

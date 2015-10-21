@@ -3,11 +3,13 @@
 
 class Tab:
     tabdata = []
+    blankTabLine = "--------------------|"
 
     # Constructor for a Tab object, which takes a file containing a tab
-    def __init__(self, tabfile):
+    def __init__(self, tabfile=''):
         self.tabfile = tabfile
-        self.parse(tabfile)
+        if tabfile != '':
+            self.parse(tabfile)
 
     # Description: Returns the entry at the x,y coordinate of the grid,
     #   or just returns the 2d grid if no x,y coordinate is passed
@@ -17,7 +19,7 @@ class Tab:
         else:
             return self.tabdata
 
-    # Write any changes to the tab file
+    # Write a single change to the tab file
     def write(self, row, col, value):
         tab = open(self.tabfile, 'r')
         data = list(tab.read())
@@ -29,6 +31,31 @@ class Tab:
         tab = open(self.tabfile, 'wb')
         for item in data:
             tab.write(bytes(item, 'UTF-8'))
+
+    # Extend the tab by one bar
+    def extendByOneBar(self):
+        extendedTab = ''
+        tabLines = []
+        tab = open(self.tabfile)
+
+        for line in tab:
+            tabLines.append(line)
+        tab.close()
+
+        for i in range(len(tabLines)):
+            if i < len(tabLines) - 1:
+                # Not the last line
+                newlineIndex = tabLines[i].find('\n')
+                extendedTab += tabLines[i][:newlineIndex] + self.blankTabLine
+                extendedTab += "\n"
+            else:
+                # Last line gets special treatment
+                extendedTab += tabLines[i] + self.blankTabLine
+
+        tab = open(self.tabfile, 'w')
+        tab.write(extendedTab)
+        tab.close()
+
 
     # Description: parse a txt file as a guitar tab, storing the corresponding
     #   image name for the Atlas in a 2d array, available for lookup.

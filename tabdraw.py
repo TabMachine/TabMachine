@@ -10,6 +10,7 @@ from tab import Tab
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.popup import Popup
 from kivy.uix.widget import Widget
+from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
 from kivy.uix.label import Label
 from kivy.properties import ObjectProperty
@@ -27,6 +28,7 @@ class TabArea(BoxLayout):
     tabCanvas = ObjectProperty(None)
     slide = ObjectProperty(None)
     scrlv = ObjectProperty(None)
+    mainBoxLayout = ObjectProperty(None)
 
     # Constant declaration
     CHAR_WIDTH = 32
@@ -48,9 +50,21 @@ class TabArea(BoxLayout):
             slide.value = value
 
     # Set the tab as editable or not editable
-    # Allows user to alter the tab depending on the value
+    # Allows user to edit the tab if True
     def setEditable(self, setter=True):
+        # Adds the 'extend tab' button to the right of the tab
+        if not self.editable and setter:
+            self.mainBoxLayout.add_widget(Button(
+                    text='Extend Tab',
+                    size_hint=(0.1, 0.5),
+                    on_release=self.extendTab))
+
         self.editable = setter
+
+    # Extend each line of the tab by one blank bar
+    def extendTab(self, kivyAction):
+        self.tab.extendByOneBar()
+        self.drawtab()
 
     # A callback function to get the user input from the textInput module
     def setInputText(self, instance, value):
@@ -99,7 +113,6 @@ class TabArea(BoxLayout):
             self.tabFile = filename
         self.tab = Tab(self.tabFile)
         grid = self.tab.getTabData()
-
         self.tabNumRows = len(grid) - 1
 
         with self.tabCanvas.canvas:
