@@ -68,41 +68,6 @@
 		TabArea:
 			id: tabarea
 
-		#Widget
-		#Widget
-		#Slider
-			#id: Volume
-			#size_hint: (1, .15)
-			#pos_hint: {bottom + '100': .70}
-			#value: 50
-			#range: (0,100)
-			#step: 5
-			#volume: Volume.setter(self)
-		ActionBar:
-			pos_hint: {'bottom':1}
-			ActionView:
-				use_separator: True
-				ActionPrevious:
-					title: 'Editor Toolbar'
-					with_previous: False
-				ActionOverflow:
-				ActionButton:
-					text: 'Btn0'
-					#icon: 'atlas://data/images/defaulttheme/audio-volume-high' if Volume.value > 65 else 'atlas://data/images/defaulttheme/audio-volume-medium' if 25 < Volume.value < 70 else 'atlas://data/images/defaulttheme/audio-volume-low' if 0 < Volume.value < 30 else 'atlas://data/images/defaulttheme/audio-volume-muted'
-				ActionButton:
-					text: 'Hammer On'
-				ActionButton:
-					text: 'Slide Off'
-				ActionButton:
-					text: "Thor"
-					icon: 'Assets/images/hammer.jpg'
-				ActionButton:
-					text: 'Btn4'
-				ActionButton
-					#text: '%s' % int(Volume.value)
-				ActionButton
-					icon: 'Assets/images/hammer.jpg'
-
 <TabCanvas>
 
 <TabArea>

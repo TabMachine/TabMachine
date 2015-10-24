@@ -16,7 +16,8 @@ from kivy.uix.label import Label
 from kivy.properties import ObjectProperty
 from kivy.atlas import Atlas
 from kivy.graphics import Rectangle
-
+from kivy.lang import Builder
+from kivy.uix.actionbar import ActionBar
 
 # The widget that holds the drawing of the tab
 class TabCanvas(Widget):
@@ -83,13 +84,23 @@ class TabArea(BoxLayout):
             # To access (row, column) use (yIndex, xIndex)
 
             # Popup a kivy TextInput
+            box = BoxLayout()
+            box.orientation = 'vertical'
+		
+		
             textbox = TextInput(text='', multiline=False)
+            #Builder.load_file("screens/edittoolbar.kv")
+            edit_toolbar = Edittoolbar()
+		
+            box.add_widget(textbox)
+            box.add_widget(edit_toolbar)
+		
             inputPopup = Popup(
-                title='Edit',
-                content = textbox,
+                title='Fret Number',
+                content = box,
                 size_hint = (None, None),
-                size = (100, 100)
-            )
+                size = (1200, 200)
+                )
             textbox.bind(on_text_validate=inputPopup.dismiss)
             textbox.bind(text=self.setInputText)
             inputPopup.bind(
@@ -131,3 +142,6 @@ class TabArea(BoxLayout):
                                 pos=(j*self.CHAR_WIDTH, (self.tabNumRows-i)*self.CHAR_HEIGHT),
                                 size=(self.CHAR_WIDTH, self.CHAR_HEIGHT)
                             )
+class Edittoolbar(ActionBar):
+    Builder.load_file("screens/edittoolbar.kv")
+    pass

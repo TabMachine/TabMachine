@@ -46,7 +46,7 @@ from kivy.atlas import Atlas
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.slider import Slider
 from kivy.core.audio import SoundLoader, Sound
-#from libs import browser
+from kivy.uix.actionbar import ActionBar
 import webbrowser
 
 # What is i and where is it used?
@@ -129,6 +129,9 @@ class CreateScreen(Screen):
     # When entering create screen, prompts user to pick an existing file to edit
     #  or to create a new file
     def on_enter(self):
+		# starts the file manager when this screen is entered
+        #self.tabarea.edit_toolbar = EditToolbar(root=self)
+        #self.add_widget(self.tabarea.edit_toolbar)
         content = NewOrOldFile(newTab=self.newTab, oldTab=self.oldTab)
         self._popup = Popup(title="File Type", content=content, size_hint=(0.4, 0.4))
         self._popup.open()
@@ -323,6 +326,7 @@ class NavMenu(BoxLayout):
         self.root.set_current_screen('ViewScreen')
 
 
+		
 class TabMachineApp(App):
     font_size_regular = sp(25)
     font_size_large = font_size_regular * 2
