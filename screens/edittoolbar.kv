@@ -15,14 +15,21 @@
 				size: self.parent.size
 				#orientation: 'tb-rl'
 				orientation: 'vertical'
-				Label:
-					size_hint_x: 1.0
-					size_hint_y: .25
-					text: 'Hammer On'
-					pos_hint_x: .85
-				Image:
-					source: 'atlas://Assets/main/hammeron'
-					size_hint: (1,.35)
+				ToggleButton:
+					group: 'toolbar'
+					BoxLayout:
+						pos: self.parent.pos
+						size: self.parent.size
+						orientation: 'vertical'
+						group: 'toolbar'
+						Label:
+							size_hint_x: 1.0
+							size_hint_y: .25
+							text: 'Hammer On'
+							pos_hint_x: .85
+						Image:
+							source: 'atlas://Assets/main/hammeron'
+							size_hint: (1,.35)
 		ActionButton:
 			text_size: (85,0)
 			on_press: print('pull off')
@@ -32,14 +39,21 @@
 				size: self.parent.size
 				#orientation: 'tb-rl'
 				orientation: 'vertical'
-				Label:
-					size_hint_x: 1.0
-					size_hint_y: .25
-					text: 'Pull Off'
-					pos_hint_x: .85
-				Image:
-					source: 'atlas://Assets/main/pulloff'
-					size_hint: (1,.35)
+				ToggleButton:
+					group: 'toolbar'
+					BoxLayout:
+						pos: self.parent.pos
+						size: self.parent.size
+						orientation: 'vertical'
+						group: 'toolbar'
+						Label:
+							size_hint_x: 1.0
+							size_hint_y: .25
+							text: 'Pull Off'
+							pos_hint_x: .85
+						Image:
+							source: 'atlas://Assets/main/pulloff'
+							size_hint: (1,.35)
 		ActionButton:
 			text_size: (85,0)
 			on_press: print('slide')
@@ -49,14 +63,21 @@
 				size: self.parent.size
 				#orientation: 'tb-rl'
 				orientation: 'vertical'
-				Label:
-					size_hint_x: 1.0
-					size_hint_y: .25
-					text: 'Slide'
-					pos_hint_x: .85
-				Image:
-					source: 'atlas://Assets/main/slide'
-					size_hint: (1,.35)
+				ToggleButton:
+					group: 'toolbar'
+					BoxLayout:
+						pos: self.parent.pos
+						size: self.parent.size
+						orientation: 'vertical'
+						group: 'toolbar'
+						Label:
+							size_hint_x: 1.0
+							size_hint_y: .25
+							text: 'Slide'
+							pos_hint_x: .85
+						Image:
+							source: 'atlas://Assets/main/slide'
+							size_hint: (1,.35)
 		ActionButton:
 			text_size: (85,0)
 			on_press: print('Bend Up')
@@ -66,14 +87,21 @@
 				size: self.parent.size
 				#orientation: 'tb-rl'
 				orientation: 'vertical'
-				Label:
-					size_hint_x: 1.0
-					size_hint_y: .25
-					text: 'Bend Up'
-					pos_hint_x: .85
-				Image:
-					source: 'atlas://Assets/main/bendup'
-					size_hint: (1,.35)
+				ToggleButton:
+					group: 'toolbar'
+					BoxLayout:
+						pos: self.parent.pos
+						size: self.parent.size
+						orientation: 'vertical'
+						group: 'toolbar'
+						Label:
+							size_hint_x: 1.0
+							size_hint_y: .25
+							text: 'Bend Up'
+							pos_hint_x: .85
+						Image:
+							source: 'atlas://Assets/main/bendup'
+							size_hint: (1,.35)
 		ActionButton:
 			text_size: (85,0)
 			on_press: print('bend down')
@@ -83,14 +111,21 @@
 				size: self.parent.size
 				#orientation: 'tb-rl'
 				orientation: 'vertical'
-				Label:
-					size_hint_x: 1.0
-					size_hint_y: .25
-					text: 'Bend Down'
-					pos_hint_x: .85
-				Image:
-					source: 'atlas://Assets/main/benddown'
-					size_hint: (1,.35)
+				ToggleButton:
+					group: 'toolbar'
+					BoxLayout:
+						pos: self.parent.pos
+						size: self.parent.size
+						orientation: 'vertical'
+						group: 'toolbar'
+						Label:
+							size_hint_x: 1.0
+							size_hint_y: .25
+							text: 'Bend Down'
+							pos_hint_x: .85
+						Image:
+							source: 'atlas://Assets/main/benddown'
+							size_hint: (1,.35)
 		ActionButton:
 			text_size: (85,0)
 			on_press: print('bend note')
@@ -100,14 +135,21 @@
 				size: self.parent.size
 				#orientation: 'tb-rl'
 				orientation: 'vertical'
-				Label:
-					size_hint_x: 1.0
-					size_hint_y: .25
-					text: 'Bend Note'
-					pos_hint_x: .85
-				Image:
-					source: 'atlas://Assets/main/bendnote'
-					size_hint: (1,.35)
+				ToggleButton:
+					group: 'toolbar'
+					BoxLayout:
+						pos: self.parent.pos
+						size: self.parent.size
+						orientation: 'vertical'
+						group: 'toolbar'
+						Label:
+							size_hint_x: 1.0
+							size_hint_y: .25
+							text: 'Bend Note'
+							pos_hint_x: .85
+						Image:
+							source: 'atlas://Assets/main/bendnote'
+							size_hint: (1,.35)
 		ActionButton:
 			text_size: (85,0)
 			on_press: print('vibrato')
@@ -117,14 +159,21 @@
 				size: self.parent.size
 				#orientation: 'tb-rl'
 				orientation: 'vertical'
-				Label:
-					size_hint_x: 1.0
-					size_hint_y: .25
-					text: 'Vibrato'
-					pos_hint_x: .85
-				Image:
-					source: 'atlas://Assets/main/vibrato'
-					size_hint: (1,.35)
+				ToggleButton:
+					group: 'toolbar'
+					BoxLayout:
+						pos: self.parent.pos
+						size: self.parent.size
+						orientation: 'vertical'
+						group: 'toolbar'
+						Label:
+							size_hint_x: 1.0
+							size_hint_y: .25
+							text: 'Vibrato'
+							pos_hint_x: .85
+						Image:
+							source: 'atlas://Assets/main/vibrato'
+							size_hint: (1,.35)
 		ActionButton:
 			text_size: (85,0)
 			on_press: print('squealie')
@@ -134,11 +183,17 @@
 				size: self.parent.size
 				#orientation: 'tb-rl'
 				orientation: 'vertical'
-				Label:
-					size_hint_x: 1.0
-					size_hint_y: .25
-					text: 'Squealie'
-					pos_hint_x: .85
-				Image:
-					source: 'atlas://Assets/main/squealie'
-					size_hint: (1,.35)
+				ToggleButton:
+					group: 'toolbar'
+					BoxLayout:
+						pos: self.parent.pos
+						size: self.parent.size
+						orientation: 'vertical'
+						Label:
+							size_hint_x: 1.0
+							size_hint_y: .25
+							text: 'Squealie'
+							pos_hint_x: .85
+						Image:
+							source: 'atlas://Assets/main/squealie'
+							size_hint: (1,.35)
