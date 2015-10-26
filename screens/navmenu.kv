@@ -3,19 +3,32 @@
     #label_widget: s1.__self__
     id: nav_menu
     orientation: 'horizontal'
-    size_hint_y: None
-    height: 70
-    StackLayout:
+    size_hint_y: 0.1
+    #height: 80
+    BoxLayout:
+        orientation: 'horizontal'
+        padding: 10
+        spacing: 20
         Button:
+            background_color: (0, 0, 0, 0)
             font_size: app.font_size_regular
-            text: 'Create'
-            size_hint_x: .1
-            on_press: nav_menu.go_create()
-        Button:
-            font_size: app.font_size_regular
-            text: 'View/Edit'
-            size_hint_x: .1
+            size_hint: (None, None)
+            size: (80, 80)
             on_press: nav_menu.go_view()
+            Image:
+                source: 'Assets/images/FlatDesign/PlayNavBar.png'
+                size: self.parent.size
+                pos: self.parent.pos
+        Button:
+            background_color: (0, 0, 0, 0)
+            font_size: app.font_size_regular
+            size_hint: (None, None)
+            size: (80, 80)
+            on_press: nav_menu.go_create()
+            Image:
+                source: 'Assets/images/FlatDesign/EditNavBar.png'
+                size: self.parent.size
+                pos: self.parent.pos
         Widget:
 			size_hint_x: .45
 		#Button:
@@ -30,4 +43,3 @@
             #value: 50
             #range: (0,100)
             #step: 5
-
