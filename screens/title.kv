@@ -3,37 +3,7 @@
         Rectangle:
             pos: self.pos
             size: self.size
-            source: "Assets/images/white_vector.png"
-	Label:#adds the title at the top
-        size_hint: (None, None)
-        font_name: 'bitMap'
-        font_size: app.font_size_large
-        text: 'Tab Machine'
-        color: 0,0,0,1 #Font color
-        #center: root.center
-        y: root.height - app.font_size_xlarge
-        x: root.width / 2 - 70
-
-    BoxLayout: #adds the video player
-		size_hint: (.2, .6)
-		id: video_ai
-		x: self.parent.x
-		y: app.font_size_large * 2
-
-	Label:
-        id: urlLink
-        size_hint: (None, None)
-        x: self.width
-    	text: 'Powered By:'
-    	color: 0,0,0,1 #Font color
-		Button:
-			background_color: (0.0, 0.0, 0.0, 0.0)
-		    on_press: app.open_browser()
-		    x: self.parent.x + self.width
-			Image:
-				source: 'Assets/images/kivy-logo-black-256.png'
-				#y: self.parent.y
-				x: self.parent.x + self.width
+            source: "Assets/images/FlatDesign/Background.png"
 
 	#Main Buttons
     FloatLayout:
@@ -47,7 +17,7 @@
 	            on_press: root.manager.current = 'ViewScreen'
 	            background_color: (0.0, 0.0, 0.0, 0.0)
 	            Image:
-		            source: 'Assets/images/FlatDesign/PickPlayButton.png'
+		            source: 'Assets/images/FlatDesign/PickButtonDark.png'
 		            size: (self.parent.width, self.parent.height)
 		            y: self.parent.y + self.parent.height - 400
         			x: self.parent.x
@@ -56,7 +26,7 @@
 	            on_press: root.manager.current = 'CreateScreen'
 	            background_color: (0.0, 0.0, 0.0, 0.0)
 	            Image:
-		            source: 'Assets/images/FlatDesign/PencilEditButton.png'
+		            source: 'Assets/images/FlatDesign/PencilButtonDark.png'
 		            size: (self.parent.width, self.parent.height)
 		            y: self.parent.y + self.parent.height - 400
         			x: self.parent.x

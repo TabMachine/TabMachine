@@ -1,6 +1,12 @@
 #:import KivyLexer kivy.extras.highlight.KivyLexer
 
 <ViewScreen>:
+	canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: "Assets/images/FlatDesign/DarkBackground.png"
+
 	#text_input: text_input
 	tabarea: tabarea
 	volSlider: s1

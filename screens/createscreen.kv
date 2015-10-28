@@ -7,6 +7,12 @@
 
 
 <CreateScreen>:
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: "Assets/images/FlatDesign/DarkBackground.png"
+
     tabarea: tabarea
 	volSlider: s1
 	bpsSlider: bpsSlider

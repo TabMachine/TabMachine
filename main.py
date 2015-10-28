@@ -95,11 +95,7 @@ class SaveDialog(FloatLayout):
 
 
 class TitleScreen(Screen):
-	def on_enter(self):
-		self.ids.video_ai.add_widget(vp)
-
-	def on_leave(self):
-		self.ids.video_ai.remove_widget(vp)
+	pass
 
 
 class NewOrOldFile(BoxLayout):
@@ -326,7 +322,7 @@ class NavMenu(BoxLayout):
         self.root.set_current_screen('ViewScreen')
 
 
-		
+
 class TabMachineApp(App):
     font_size_regular = sp(25)
     font_size_large = font_size_regular * 2
