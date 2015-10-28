@@ -64,12 +64,19 @@
 	        	size_hint_x: .03
 	            on_active: root.on_checkbox_active(self, *args)
 
-			Button:
-				size_hint_x: .04
-				#size_hint_y: .75
-				#text: 'Slider value is %s' % int(s1.value) if s1.value else 'Slider not set'
-				background_normal: 'atlas://data/images/defaulttheme/audio-volume-high' if s1.value > .65 else 'atlas://data/images/defaulttheme/audio-volume-medium' if .25 < s1.value < .70 else 'atlas://data/images/defaulttheme/audio-volume-low' if 0 < s1.value < .30 else 'atlas://data/images/defaulttheme/audio-volume-muted'
-				background_down: 'atlas://data/images/defaulttheme/audio-volume-high' if s1.value > .65 else 'atlas://data/images/defaulttheme/audio-volume-medium' if .25 < s1.value < .70 else 'atlas://data/images/defaulttheme/audio-volume-low' if 0 < s1.value < .30 else 'atlas://data/images/defaulttheme/audio-volume-muted'
+			Image:
+				pos: self.parent.pos
+				size_hint_x: .05
+				BoxLayout:
+					#size: self.parent.size
+					pos: self.parent.pos
+					Image:
+						pos: self.parent.pos
+						#size_hint_x: .001
+						source: 'atlas://data/images/defaulttheme/audio-volume-high' if s1.value > .65 else 'atlas://data/images/defaulttheme/audio-volume-medium' if .25 < s1.value < .70 else 'atlas://data/images/defaulttheme/audio-volume-low' if 0 < s1.value < .30 else 'atlas://data/images/defaulttheme/audio-volume-muted'
+						#text: 'Slider value is %s' % int(s1.value) if s1.value else 'Slider not set'
+						#background_normal: 'atlas://data/images/defaulttheme/audio-volume-high' if s1.value > .65 else 'atlas://data/images/defaulttheme/audio-volume-medium' if .25 < s1.value < .70 else 'atlas://data/images/defaulttheme/audio-volume-low' if 0 < s1.value < .30 else 'atlas://data/images/defaulttheme/audio-volume-muted'
+						#background_down: 'atlas://data/images/defaulttheme/audio-volume-high' if s1.value > .65 else 'atlas://data/images/defaulttheme/audio-volume-medium' if .25 < s1.value < .70 else 'atlas://data/images/defaulttheme/audio-volume-low' if 0 < s1.value < .30 else 'atlas://data/images/defaulttheme/audio-volume-muted'
 	        Slider:
 				size_hint_x: .15
 	            id: s1
