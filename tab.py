@@ -37,20 +37,27 @@ class Tab:
         extendedTab = ''
         tabLines = []
         tab = open(self.tabfile)
+        linecount = 0
 
         for line in tab:
             tabLines.append(line)
+            linecount += 1
         tab.close()
 
-        for i in range(len(tabLines)):
-            if i < len(tabLines) - 1:
-                # Not the last line
-                newlineIndex = tabLines[i].find('\n')
-                extendedTab += tabLines[i][:newlineIndex] + self.blankTabLine
-                extendedTab += "\n"
-            else:
-                # Last line gets special treatment
-                extendedTab += tabLines[i] + self.blankTabLine
+        if linecount < 2:
+            for i in range(5):
+                extendedTab += '|' + self.blankTabLine + '\n'
+            extendedTab += '|' + self.blankTabLine
+        else:
+            for i in range(len(tabLines)):
+                if i < len(tabLines) - 1:
+                    # Not the last line
+                    newlineIndex = tabLines[i].find('\n')
+                    extendedTab += tabLines[i][:newlineIndex] + self.blankTabLine
+                    extendedTab += "\n"
+                else:
+                    # Last line gets special treatment
+                    extendedTab += tabLines[i] + self.blankTabLine
 
         tab = open(self.tabfile, 'w')
         tab.write(extendedTab)
@@ -62,29 +69,35 @@ class Tab:
         tab = open(self.tabfile)
         reducedTab = ''
         tabLines = []
+        hasMoreThanOneBar = True
 
         for line in tab:
             tabLines.append(line)
         tab.close()
 
+        if len(tabLines[0]) < len(self.blankTabLine) * 2:
+            hasMoreThanOneBar = False
+
         # Find index of 2nd to last bar, which will be the end of the tab
-        for i in range(len(tabLines)):
-            firstBar = True
-            j = len(tabLines[i])
-            while(tabLines[i][j] != '|' or firstBar):
-                if tabLines[i][j] == '|':
-                    firstBar = False
-                j -= 1;
+        if hasMoreThanOneBar:
+            for i in range(len(tabLines)):
+                firstBar = True
+                j = len(tabLines[i]) - 1
+                if j > 0:
+                    while(tabLines[i][j] != '|' or firstBar):
+                        if tabLines[i][j] == '|':
+                            firstBar = False
+                        j -= 1;
 
-            # j is now at the 2nd to last bar
-            if i < len(tabLines) - 1:
-                reducedTab += tablines[i][0:j] + "\n"
-            else:
-                reducedTab += tablines[i][0:j]
+                    # j is now at the 2nd to last bar
+                    if i < len(tabLines) - 1:
+                        reducedTab += tabLines[i][0:j+1] + "\n"
+                    else:
+                        reducedTab += tabLines[i][0:j+1]
 
-        tab = open(self.tabfile, 'w')
-        tab.write(extendedTab)
-        tab.close()
+            tab = open(self.tabfile, 'w')
+            tab.write(reducedTab)
+            tab.close()
 
     # Description: parse a txt file as a guitar tab, storing the corresponding
     #   image name for the Atlas in a 2d array, available for lookup.

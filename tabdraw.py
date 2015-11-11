@@ -60,16 +60,19 @@ class TabArea(BoxLayout):
 	def setEditable(self, setter=True):
 		# Adds the 'extend tab' button to the right of the tab
 		if not self.editable and setter:
-			self.mainBoxLayout.add_widget(Button(
-					text='Extend Tab',
-					size_hint=(0.1, 0.5),
-					on_release=self.extendTab))
+			self.mainBoxLayout.add_widget(Button(text='Extend Tab',size_hint=(0.1, 0.5),on_release=self.extendTab))
+			self.mainBoxLayout.add_widget(Button(text='Reduce Tab',size_hint=(0.1, 0.5),on_release=self.reduceTab))
 
 		self.editable = setter
 
 	# Extend each line of the tab by one blank bar
 	def extendTab(self, kivyAction):
 		self.tab.extendByOneBar()
+		self.drawtab()
+
+    # Reduce each line of the tab by one bar
+	def reduceTab(self, kivyAction):
+		self.tab.reduceByOneBar()
 		self.drawtab()
 
 	# A callback function to get the user input from the textInput module
@@ -91,15 +94,15 @@ class TabArea(BoxLayout):
 			# Popup a kivy TextInput
 			box = BoxLayout()
 			box.orientation = 'vertical'
-		
-		
+
+
 			textbox = TextInput(text='', multiline=False)
 			#Builder.load_file("screens/edittoolbar.kv")
 			edit_toolbar = Edittoolbar()
-		
+
 			box.add_widget(textbox)
 			box.add_widget(edit_toolbar)
-		
+
 			inputPopup = Popup(
 				title='Fret Number',
 				content = box,
@@ -131,6 +134,8 @@ class TabArea(BoxLayout):
 		grid = self.tab.getTabData()
 		self.tabNumRows = len(grid) - 1
 
+		# Clear canvas in case a bar was removed
+		self.tabCanvas.canvas.clear()
 		with self.tabCanvas.canvas:
 			for i in range(len(grid)):
 				for j in range(len(grid[i])):
