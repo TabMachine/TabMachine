@@ -16,77 +16,292 @@
     tabarea: tabarea
 	volSlider: s1
 	bpsSlider: bpsSlider
-    BoxLayout:
-        size: self.parent.size
-        orientation: 'vertical'
-        spacing: 200
-        #control Menu
-		StackLayout:
-			# Control Menu
-            # Decided to make it a seperate menu from the nav menu
-		    #orientation: 'horizontal'
-			size_hint_y: None
-			y: root.height - 80
-			#spacing: 100
-
+    NavigationDrawer:
+		anim_type: 'slide_above_simple'
+		side_panel_positioning: 'bottom'
+		side_panel_width: 300
+		side_panel_height: self.height/4
+		separator_image: 'Assets/images/up-arrow-icon.png'
+		BoxLayout:
+			orientation: 'horizontal'
 			Button:
-				size_hint_x: .04
-				text: 'Save'
-				on_press: root.show_save()
-			ToggleButton:
-				id: playbtn
-				size_hint_x: .03
-				#size_hint_y: .10
-				#text: 'play/pause'
-				background_normal: 'Assets/images/play2.png'
-				background_down: 'Assets/images/pause2.png'
-				on_press: root.play_pause(*args)
-			Label:
-				size_hint_x: .15
-				text: 'Beats per Minute (BPM) %s' % int(bpsSlider.value)
-			Slider:
-				size_hint_x: .25
-            	id: bpsSlider
-            	value: 60
-            	range: (0,300)
-            	step: 10
-			CheckBox:
-				id: 'soundPlay'
-				group: 'soundPlay'
-				size_hint_x: .03
-	            on_active: root.on_checkbox_active(self, *args)
-	        Label:
-	        	size_hint_x: .15
-				text: 'AutoScroll'
-	        CheckBox:
-	        	id: 'autoScroll'
-	        	group: 'autoScroll'
-	        	size_hint_x: .03
-	            on_active: root.on_checkbox_active(self, *args)
-
-			Image:
-				pos: self.parent.pos
-				size_hint_x: .05
+				text_size: (85,0)
+				
+				text: '            '
 				BoxLayout:
-					#size: self.parent.size
 					pos: self.parent.pos
-					Image:
-						pos: self.parent.pos
-						#size_hint_x: .001
-						source: 'atlas://data/images/defaulttheme/audio-volume-high' if s1.value > .65 else 'atlas://data/images/defaulttheme/audio-volume-medium' if .25 < s1.value < .70 else 'atlas://data/images/defaulttheme/audio-volume-low' if 0 < s1.value < .30 else 'atlas://data/images/defaulttheme/audio-volume-muted'
-						#text: 'Slider value is %s' % int(s1.value) if s1.value else 'Slider not set'
-						#background_normal: 'atlas://data/images/defaulttheme/audio-volume-high' if s1.value > .65 else 'atlas://data/images/defaulttheme/audio-volume-medium' if .25 < s1.value < .70 else 'atlas://data/images/defaulttheme/audio-volume-low' if 0 < s1.value < .30 else 'atlas://data/images/defaulttheme/audio-volume-muted'
-						#background_down: 'atlas://data/images/defaulttheme/audio-volume-high' if s1.value > .65 else 'atlas://data/images/defaulttheme/audio-volume-medium' if .25 < s1.value < .70 else 'atlas://data/images/defaulttheme/audio-volume-low' if 0 < s1.value < .30 else 'atlas://data/images/defaulttheme/audio-volume-muted'
-	        Slider:
-				size_hint_x: .15
-	            id: s1
-	            value: 1
-	            range: (0,1)
-	            step: .1
+					size: self.parent.size
+					#orientation: 'tb-rl'
+					orientation: 'vertical'
+					ToggleButton:
+						group: 'toolbar'
+						#on_press: print('hammer on')
+						#on_press: root.checkButtons('hammeron')
+						BoxLayout:
+							pos: self.parent.pos
+							size: self.parent.size
+							orientation: 'vertical'
+							group: 'toolbar'
+							Label:
+								size_hint_x: 1.0
+								size_hint_y: .25
+								text: 'Hammer On'
+								pos_hint_x: .85
+							Image:
+								source: 'atlas://Assets/main/hammeron'
+								size_hint: (1,.35)
+			Button:
+				text_size: (85,0)
+				
+				text: '            '
+				BoxLayout:
+					pos: self.parent.pos
+					size: self.parent.size
+					#orientation: 'tb-rl'
+					orientation: 'vertical'
+					ToggleButton:
+						group: 'toolbar'
+						#on_press: print('pull off')
+						#on_press: root.checkButtons('pulloff')
+						BoxLayout:
+							pos: self.parent.pos
+							size: self.parent.size
+							orientation: 'vertical'
+							group: 'toolbar'
+							Label:
+								size_hint_x: 1.0
+								size_hint_y: .25
+								text: 'Pull Off'
+								pos_hint_x: .85
+							Image:
+								source: 'atlas://Assets/main/pulloff'
+								size_hint: (1,.35)
+			Button:
+				text_size: (85,0)
+				
+				text: '            '
+				BoxLayout:
+					pos: self.parent.pos
+					size: self.parent.size
+					#orientation: 'tb-rl'
+					orientation: 'vertical'
+					ToggleButton:
+						group: 'toolbar'
+						#on_press: print('slide')
+						#on_press: root.checkButtons('slide')
+						BoxLayout:
+							pos: self.parent.pos
+							size: self.parent.size
+							orientation: 'vertical'
+							group: 'toolbar'
+							Label:
+								size_hint_x: 1.0
+								size_hint_y: .25
+								text: 'Slide'
+								pos_hint_x: .85
+							Image:
+								source: 'atlas://Assets/main/slide'
+								size_hint: (1,.35)
+			Button:
+				text_size: (85,0)
+				
+				text: '            '
+				BoxLayout:
+					pos: self.parent.pos
+					size: self.parent.size
+					#orientation: 'tb-rl'
+					orientation: 'vertical'
+					ToggleButton:
+						group: 'toolbar'
+						#on_press: print('Bend Up')
+						#on_press: root.checkButtons('bendup')
+						BoxLayout:
+							pos: self.parent.pos
+							size: self.parent.size
+							orientation: 'vertical'
+							group: 'toolbar'
+							Label:
+								size_hint_x: 1.0
+								size_hint_y: .25
+								text: 'Bend Up'
+								pos_hint_x: .85
+							Image:
+								source: 'atlas://Assets/main/bendup'
+								size_hint: (1,.35)
+			Button:
+				text_size: (85,0)
+				
+				text: '            '
+				BoxLayout:
+					pos: self.parent.pos
+					size: self.parent.size
+					#orientation: 'tb-rl'
+					orientation: 'vertical'
+					ToggleButton:
+						group: 'toolbar'
+						#on_press: print('bend down')
+						#on_press: root.checkButtons('benddown')
+						BoxLayout:
+							pos: self.parent.pos
+							size: self.parent.size
+							orientation: 'vertical'
+							group: 'toolbar'
+							Label:
+								size_hint_x: 1.0
+								size_hint_y: .25
+								text: 'Bend Down'
+								pos_hint_x: .85
+							Image:
+								source: 'atlas://Assets/main/benddown'
+								size_hint: (1,.35)
+			Button:
+				text_size: (85,0)
+				
+				text: '            '
+				BoxLayout:
+					pos: self.parent.pos
+					size: self.parent.size
+					#orientation: 'tb-rl'
+					orientation: 'vertical'
+					ToggleButton:
+						group: 'toolbar'
+						##on_press: print('bend note')
+						##on_press: root.checkButtons('bendnote')
+						BoxLayout:
+							pos: self.parent.pos
+							size: self.parent.size
+							orientation: 'vertical'
+							group: 'toolbar'
+							Label:
+								size_hint_x: 1.0
+								size_hint_y: .25
+								text: 'Bend Note'
+								pos_hint_x: .85
+							Image:
+								source: 'atlas://Assets/main/bendnote'
+								size_hint: (1,.35)
+			Button:
+				text_size: (85,0)
+				
+				text: '            '
+				BoxLayout:
+					pos: self.parent.pos
+					size: self.parent.size
+					#orientation: 'tb-rl'
+					orientation: 'vertical'
+					ToggleButton:
+						group: 'toolbar'
+						##on_press: print('vibrato')
+						#on_press: root.checkButtons('vibrato')
+						BoxLayout:
+							pos: self.parent.pos
+							size: self.parent.size
+							orientation: 'vertical'
+							group: 'toolbar'
+							Label:
+								size_hint_x: 1.0
+								size_hint_y: .25
+								text: 'Vibrato'
+								pos_hint_x: .85
+							Image:
+								source: 'atlas://Assets/main/vibrato'
+								size_hint: (1,.35)
+			Button:
+				text_size: (85,0)
+				
+				text: '            '
+				BoxLayout:
+					pos: self.parent.pos
+					size: self.parent.size
+					#orientation: 'tb-rl'
+					orientation: 'vertical'
+					ToggleButton:
+						group: 'toolbar'
+						#on_press: print('squealie')
+						#on_press: root.checkButtons('squealie')
+						BoxLayout:
+							pos: self.parent.pos
+							size: self.parent.size
+							orientation: 'vertical'
+							Label:
+								size_hint_x: 1.0
+								size_hint_y: .25
+								text: 'Squealie'
+								pos_hint_x: .85
+							Image:
+								source: 'atlas://Assets/main/squealie'
+								size_hint: (1,.35)
+		BoxLayout:
+			size: self.parent.size
+			orientation: 'vertical'
+			spacing: 200
+			#control Menu
+			StackLayout:
+				# Control Menu
+				# Decided to make it a seperate menu from the nav menu
+				#orientation: 'horizontal'
+				size_hint_y: None
+				y: root.height - 80
+				#spacing: 100
 
-        # Tab drawing area
-        TabArea:
-            id: tabarea
+				Button:
+					size_hint_x: .04
+					text: 'Save'
+					on_press: root.show_save()
+				ToggleButton:
+					id: playbtn
+					size_hint_x: .03
+					#size_hint_y: .10
+					#text: 'play/pause'
+					background_normal: 'Assets/images/play2.png'
+					background_down: 'Assets/images/pause2.png'
+					on_press: root.play_pause(*args)
+				Label:
+					size_hint_x: .15
+					text: 'Beats per Minute (BPM) %s' % int(bpsSlider.value)
+				Slider:
+					size_hint_x: .25
+					id: bpsSlider
+					value: 60
+					range: (0,300)
+					step: 10
+				CheckBox:
+					id: 'soundPlay'
+					group: 'soundPlay'
+					size_hint_x: .03
+					on_active: root.on_checkbox_active(self, *args)
+				Label:
+					size_hint_x: .15
+					text: 'AutoScroll'
+				CheckBox:
+					id: 'autoScroll'
+					group: 'autoScroll'
+					size_hint_x: .03
+					on_active: root.on_checkbox_active(self, *args)
+
+				Image:
+					pos: self.parent.pos
+					size_hint_x: .05
+					BoxLayout:
+						#size: self.parent.size
+						pos: self.parent.pos
+						Image:
+							pos: self.parent.pos
+							#size_hint_x: .001
+							source: 'atlas://data/images/defaulttheme/audio-volume-high' if s1.value > .65 else 'atlas://data/images/defaulttheme/audio-volume-medium' if .25 < s1.value < .70 else 'atlas://data/images/defaulttheme/audio-volume-low' if 0 < s1.value < .30 else 'atlas://data/images/defaulttheme/audio-volume-muted'
+							#text: 'Slider value is %s' % int(s1.value) if s1.value else 'Slider not set'
+							#background_normal: 'atlas://data/images/defaulttheme/audio-volume-high' if s1.value > .65 else 'atlas://data/images/defaulttheme/audio-volume-medium' if .25 < s1.value < .70 else 'atlas://data/images/defaulttheme/audio-volume-low' if 0 < s1.value < .30 else 'atlas://data/images/defaulttheme/audio-volume-muted'
+							#background_down: 'atlas://data/images/defaulttheme/audio-volume-high' if s1.value > .65 else 'atlas://data/images/defaulttheme/audio-volume-medium' if .25 < s1.value < .70 else 'atlas://data/images/defaulttheme/audio-volume-low' if 0 < s1.value < .30 else 'atlas://data/images/defaulttheme/audio-volume-muted'
+				Slider:
+					size_hint_x: .15
+					id: s1
+					value: 1
+					range: (0,1)
+					step: .1
+
+			# Tab drawing area
+			TabArea:
+				id: tabarea
 
 <NewOrOldFile>:
     BoxLayout:
