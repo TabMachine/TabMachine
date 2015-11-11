@@ -52,7 +52,6 @@ import webbrowser
 # What is i and where is it used?
 i = 0
 
-# One dead puppy per global
 global move_value
 move_value = 0
 vp = VideoPlayer(source="Assets/videos/testVideo.mp4", options={'allow_stretch': True})

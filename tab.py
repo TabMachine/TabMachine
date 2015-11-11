@@ -56,6 +56,35 @@ class Tab:
         tab.write(extendedTab)
         tab.close()
 
+    # Reduce the tab by one bar
+    # If bar has content, confirmation is needed from the user
+    def reduceByOneBar(self):
+        tab = open(self.tabfile)
+        reducedTab = ''
+        tabLines = []
+
+        for line in tab:
+            tabLines.append(line)
+        tab.close()
+
+        # Find index of 2nd to last bar, which will be the end of the tab
+        for i in range(len(tabLines)):
+            firstBar = True
+            j = len(tabLines[i])
+            while(tabLines[i][j] != '|' or firstBar):
+                if tabLines[i][j] == '|':
+                    firstBar = False
+                j -= 1;
+
+            # j is now at the 2nd to last bar
+            if i < len(tabLines) - 1:
+                reducedTab += tablines[i][0:j] + "\n"
+            else:
+                reducedTab += tablines[i][0:j]
+
+        tab = open(self.tabfile, 'w')
+        tab.write(extendedTab)
+        tab.close()
 
     # Description: parse a txt file as a guitar tab, storing the corresponding
     #   image name for the Atlas in a 2d array, available for lookup.
