@@ -7,10 +7,11 @@
             size: self.size
             source: "Assets/images/FlatDesign/DarkBackground.png"
 
-	#text_input: text_input
+	# Kivy keynames
 	tabarea: tabarea
 	volSlider: s1
 	bpsSlider: bpsSlider
+
 	NavigationDrawer:
 		anim_type: 'slide_above_simple'
 		side_panel_positioning: 'bottom'
@@ -21,7 +22,7 @@
 			orientation: 'horizontal'
 			Button:
 				text_size: (85,0)
-				
+
 				text: '            '
 				BoxLayout:
 					pos: self.parent.pos
@@ -47,7 +48,7 @@
 								size_hint: (1,.35)
 			Button:
 				text_size: (85,0)
-				
+
 				text: '            '
 				BoxLayout:
 					pos: self.parent.pos
@@ -73,7 +74,7 @@
 								size_hint: (1,.35)
 			Button:
 				text_size: (85,0)
-				
+
 				text: '            '
 				BoxLayout:
 					pos: self.parent.pos
@@ -99,7 +100,7 @@
 								size_hint: (1,.35)
 			Button:
 				text_size: (85,0)
-				
+
 				text: '            '
 				BoxLayout:
 					pos: self.parent.pos
@@ -125,7 +126,7 @@
 								size_hint: (1,.35)
 			Button:
 				text_size: (85,0)
-				
+
 				text: '            '
 				BoxLayout:
 					pos: self.parent.pos
@@ -151,7 +152,7 @@
 								size_hint: (1,.35)
 			Button:
 				text_size: (85,0)
-				
+
 				text: '            '
 				BoxLayout:
 					pos: self.parent.pos
@@ -177,7 +178,7 @@
 								size_hint: (1,.35)
 			Button:
 				text_size: (85,0)
-				
+
 				text: '            '
 				BoxLayout:
 					pos: self.parent.pos
@@ -203,7 +204,7 @@
 								size_hint: (1,.35)
 			Button:
 				text_size: (85,0)
-				
+
 				text: '            '
 				BoxLayout:
 					pos: self.parent.pos
@@ -226,10 +227,11 @@
 							Image:
 								source: 'atlas://Assets/main/squealie'
 								size_hint: (1,.35)
-		BoxLayout:
+		GridLayout:
 			size: self.parent.size
-			orientation: 'vertical'
-			spacing: 200
+			cols: 1
+			rows: 2
+
 			#control Menu
 			StackLayout:
 				#Control Menu Decided to make it a seperate menu from the nav menu
@@ -292,9 +294,12 @@
 					value: 1
 					range: (0,1)
 					step: .1
-			# Tab drawing area
+
+			# Tab drawing area - 2nd row in GridLayout
 			TabArea:
 				id: tabarea
+				size_hint: (1, None)
+				height: 500
 
 <TabCanvas>
 

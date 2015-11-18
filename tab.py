@@ -25,8 +25,30 @@ class Tab:
         data = list(tab.read())
         tab.close()
 
+        inputLength = len(str(value))
+        print("input length is " + str(inputLength))
         position = (self.tabLength + 2) * row + col
         data[position] = value
+
+        # If input is multiple characters long, must delete following hyphens
+        if inputLength == 2:
+            # Look for pattern of '--' and delete one '-'
+            look = position + 2
+            found = False
+            while not found:
+                if data[look] == '-' and data[look + 1] == '-':
+                    data = data[0:look] + data[look + 1:]
+                    found = True
+                look += 1
+        elif inputLength == 3:
+            # Look for '---' and delete two '--'s
+            look = position + 3
+            found = False
+            while not found:
+                if data[look] == '-' and data[look + 1] == '-' and data[look + 2] == '-':
+                    data = data[:look] + data[look + 2:]
+                    found = True
+                look += 1
 
         tab = open(self.tabfile, 'wb')
         for item in data:
