@@ -88,33 +88,34 @@ class TabArea(BoxLayout):
 			xIndex = (xpos // 32)
 			yIndex = self.tabNumRows - (ypos // 32)
 			print("Coords: " + str(yIndex) + " " + str(xIndex))
-
-			# To access (row, column) use (yIndex, xIndex)
-
-			# Popup a kivy TextInput
-			box = BoxLayout()
-			box.orientation = 'vertical'
-
-
-			textbox = TextInput(text='', multiline=False)
-			#Builder.load_file("screens/edittoolbar.kv")
-			edit_toolbar = Edittoolbar()
-
-			box.add_widget(textbox)
-			box.add_widget(edit_toolbar)
-
-			inputPopup = Popup(
-				title='Fret Number',
-				content = box,
-				size_hint = (None, None),
-				size = (1200, 200)
+			print('This is what your toggle button is: ', toggle_button)
+			if toggle_button == 'slide':
+				self.inputText = '/'
+				print('This is the inputText: ', self.inputText)
+				self.writeToTab(0,yIndex,xIndex)
+			elif toggle_button == 'vibrato':
+				self.inputText = '~'
+				print('This is the inputText: ', self.inputText)
+				self.writeToTab(0,yIndex,xIndex)
+			elif toggle_button == 'squealie':
+				self.inputText = '*'
+				print('This is the inputText: ', self.inputText)
+				self.writeToTab(0,yIndex,xIndex + 1)
+			else:
+				textbox = TextInput(text='', multiline=False)
+				inputPopup = Popup(
+					title='Fret Number',
+					content = textbox,
+					size_hint = (None, None),
+					size = (150, 100),
+					#pos = (xpos, ypos)
+					)
+				textbox.bind(on_text_validate=inputPopup.dismiss)
+				textbox.bind(text=self.setInputText)
+				inputPopup.bind(
+					on_dismiss=partial(self.writeToTab,row = yIndex, col = xIndex)
 				)
-			textbox.bind(on_text_validate=inputPopup.dismiss)
-			textbox.bind(text=self.setInputText)
-			inputPopup.bind(
-				on_dismiss=partial(self.writeToTab, row=yIndex, col=xIndex)
-			)
-			inputPopup.open()
+				inputPopup.open()
 			# call tab to rewrite file at (yIndex, xIndex) with input if valid
 
 	# Write input to the tab using tab's write function
