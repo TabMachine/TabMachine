@@ -40,14 +40,13 @@ class TabArea(BoxLayout):
 	CHAR_WIDTH = 32
 	CHAR_HEIGHT = CHAR_WIDTH
 	ATLAS_PREFIX = 'atlas://Assets/main/'
-	ACCEPT_CHARS = ['|', '-', 'x', 'X', '\\', '/', '~', '*']
+	ACCEPT_CHARS = ['|', '-', 'x', 'X', '\\', '/', '~', '*', 'h', 'p', 'b', 'r', ]
 	for num in range(25):
 		ACCEPT_CHARS.append(str(num))
 
 	# Determines if tab can be edited
 	editable = False
 	inputText = ''
-
 	def scroll_change(self, scrl, instance, value):
 		scrl.scroll_x = value
 
@@ -81,6 +80,7 @@ class TabArea(BoxLayout):
 
 	# Detects a user click on the tab, and allows editing if the option is set
 	def tabTouched(self, touch):
+		
 		if self.editable:
 			# Get the indices of the corresponding character of the tab
 			xpos = int(touch.x)
@@ -89,19 +89,85 @@ class TabArea(BoxLayout):
 			yIndex = self.tabNumRows - (ypos // 32)
 			print("Coords: " + str(yIndex) + " " + str(xIndex))
 			print('This is what your toggle button is: ', toggle_button)
+			curr_val = self.tab.getTabData(yIndex, xIndex)
+			double_digit = False
+			modifier = True
+			if len(curr_val[1]) != 1:
+				double_digit = True
+			print('this is the eval of double_digit: ', double_digit)
+			if double_digit == True:
+				double_val = self.tab.getTabData(yIndex,xIndex + 2)
+				print('her is solksdflasf: ',self.tab.getTabData(yIndex,xIndex + 1), ' ', self.tab.getTabData(yIndex,xIndex), ' ', self.tab.getTabData(yIndex,xIndex + 2))
+				if self.tab.getTabData(yIndex,xIndex) in ('bar' , 'tbar' , 'plusbar' , 'mute' , 'slide' , 'vibrato') or self.tab.getTabData(yIndex,xIndex)[0] == 'norm':
+					modifier = False
+				# if ((double_val in ('bar' , 'tbar' , 'plusbar' , 'mute' , 'slide' , 'vibrato')) or double_val[1].isdigit()):
+					# modifier = False
+			else:
+				print('her is solksdflasf: ',self.tab.getTabData(yIndex,xIndex + 1), ' ', self.tab.getTabData(yIndex,xIndex)[0], ' ', self.tab.getTabData(yIndex,xIndex + 2))
+				next_val = self.tab.getTabData(yIndex,xIndex + 1)
+				if self.tab.getTabData(yIndex,xIndex) in ('bar' , 'tbar' , 'plusbar' , 'mute' , 'slide' , 'vibrato') or self.tab.getTabData(yIndex,xIndex)[0] == 'norm':
+					modifier = False
+				# if ((next_val in ('bar' , 'tbar' , 'plusbar' , 'mute' , 'slide' , 'vibrato')) or next_val[1].isdigit()):
+					# modifier = False
+			print('Result of modifier: ', modifier)
 			if toggle_button == 'slide':
 				self.inputText = '/'
 				print('This is the inputText: ', self.inputText)
 				self.writeToTab(0,yIndex,xIndex)
+				if double_digit == True:
+					self.inputText = '-'
+					self.writeToTab(0,yIndex,xIndex + 1)
+					if modifier == True:
+						self.writeToTab(0,yIndex,xIndex + 2)
+				else:
+					self.inputText = '-'
+					if modifier == True:
+						self.writeToTab(0,yIndex,xIndex)
 			elif toggle_button == 'vibrato':
 				self.inputText = '~'
 				print('This is the inputText: ', self.inputText)
 				self.writeToTab(0,yIndex,xIndex)
+				if double_digit == True:
+					self.inputText = '-'
+					self.writeToTab(0,yIndex,xIndex + 1)
+					if modifier == True:
+						self.writeToTab(0,yIndex,xIndex + 2)
+				else:
+					self.inputText = '-'
+					if modifier == True:
+						self.writeToTab(0,yIndex,xIndex)
 			elif toggle_button == 'squealie':
 				self.inputText = '*'
 				print('This is the inputText: ', self.inputText)
-				self.writeToTab(0,yIndex,xIndex + 1)
+				if double_digit == False:
+					self.writeToTab(0,yIndex,xIndex + 1)
+				else:
+					self.writeToTab(0,yIndex,xIndex + 2)
+			elif toggle_button == 'hammeron':
+				self.inputText = 'h'
+				print('This is the inputText: ', self.inputText)
+				if double_digit == False:
+					self.writeToTab(0,yIndex,xIndex + 1)
+				else:
+					self.writeToTab(0,yIndex,xIndex + 2)
+			elif toggle_button == 'pulloff':
+				self.inputText = 'p'
+				print('This is the inputText: ', self.inputText)
+				if double_digit == False:
+					self.writeToTab(0,yIndex,xIndex + 1)
+				else:
+					self.writeToTab(0,yIndex,xIndex + 2)
 			else:
+				next_val = self.tab.getTabData(yIndex, xIndex + 1)
+				if double_digit == False:
+					if not (next_val[1].isdigit() or next_val[0] == '-'):
+						self.inputText = '-'
+						self.writeToTab(0,yIndex,xIndex + 1)
+				else:
+					self.inputText = '-'
+					self.writeToTab(0,yIndex,xIndex + 1)
+					if ((self.tab.getTabData(yIndex,xIndex + 2) not in ('bar' , 'tbar' , 'plusbar' , 'mute' , 'slide' , 'vibrato')) or not self.tab.getTabData(yIndex,xIndex + 2)[1].isdigit()):
+						self.writeToTab(0,yIndex,xIndex + 2)
 				textbox = TextInput(text='', multiline=False)
 				inputPopup = Popup(
 					title='Fret Number',
@@ -124,6 +190,7 @@ class TabArea(BoxLayout):
 			# Validate input
 			if self.inputText in self.ACCEPT_CHARS:
 				# Write to tab
+				print('We are writing ', self.inputText, ' to the tab!')
 				self.tab.write(row, col, self.inputText)
 				self.drawtab()
 
