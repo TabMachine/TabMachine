@@ -55,7 +55,7 @@ global move_value
 move_value = 0
 vp = VideoPlayer(source="Assets/videos/testVideo.mp4", options={'allow_stretch': True})
 EventLoop.ensure_window()
-sound = SoundLoader.load('Assets/sounds/beep.mp3')
+sound = SoundLoader.load('Assets/sounds/beep2.mp3')
 __version__ = '0.2.4'
 count = 0
 #Adds different fonts to the program can use the name in the label to use different

@@ -18,6 +18,15 @@
 
 		#control Menu
 		StackLayout:
+            pos: self.pos
+            size: self.size
+        	canvas:
+        		Color:
+            		rgba: 1, 1, 1, 1
+        		Rectangle:
+            		pos: self.pos
+            		size: self.size
+
 			#Control Menu Decided to make it a seperate menu from the nav menu
 			#orientation: 'horizontal'
 			size_hint_y: None
@@ -26,19 +35,25 @@
 
 			Button:
 				size_hint_x: .04
-				text: 'Save'
 				on_press: root.show_save()
+				background_color: (0.0, 0.0, 0.0, 0.0)
+				Image:
+		            source: 'Assets/images/FlatDesign/save_transparent.png'
+		            #size: (self.parent.width, self.parent.height)
+		            y: self.parent.y
+        			#x: self.parent.x
 			ToggleButton:
 				id: playbtn
 				size_hint_x: .03
 				#size_hint_y: .10
 				#text: 'play/pause'
-				background_normal: 'Assets/images/play2.png'
-				background_down: 'Assets/images/pause2.png'
+				background_normal: 'Assets/images/FlatDesign/play_transparent.png'
+				background_down: 'Assets/images/FlatDesign/pause_transparent.png'
 				on_press: root.play_pause(*args)
 			Label:
 				size_hint_x: .15
 				text: 'Beats per Minute (BPM) %s' % int(bpsSlider.value)
+				color: .14,.78,.35,1
 			Slider:
 				size_hint_x: .25
 				id: bpsSlider
@@ -53,6 +68,7 @@
 			Label:
 				size_hint_x: .15
 				text: 'AutoScroll'
+				color: .14,.78,.35,1
 			CheckBox:
 				id: 'autoScroll'
 				group: 'autoScroll'
@@ -73,6 +89,7 @@
 						#background_normal: 'atlas://data/images/defaulttheme/audio-volume-high' if s1.value > .65 else 'atlas://data/images/defaulttheme/audio-volume-medium' if .25 < s1.value < .70 else 'atlas://data/images/defaulttheme/audio-volume-low' if 0 < s1.value < .30 else 'atlas://data/images/defaulttheme/audio-volume-muted'
 						#background_down: 'atlas://data/images/defaulttheme/audio-volume-high' if s1.value > .65 else 'atlas://data/images/defaulttheme/audio-volume-medium' if .25 < s1.value < .70 else 'atlas://data/images/defaulttheme/audio-volume-low' if 0 < s1.value < .30 else 'atlas://data/images/defaulttheme/audio-volume-muted'
 			Slider:
+				background_color: (0.0, 0.0, 0.0, 0.0)
 				size_hint_x: .15
 				id: s1
 				value: 1

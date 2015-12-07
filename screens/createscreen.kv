@@ -24,6 +24,12 @@
 
 		#control Menu
 		StackLayout:
+        	canvas:
+        		Color:
+            		rgba: 1, 1, 1, 1
+        		Rectangle:
+            		pos: self.pos
+            		size: self.size
 			# Control Menu
 			# Decided to make it a seperate menu from the nav menu
 			#orientation: 'horizontal'
@@ -33,19 +39,25 @@
 
 			Button:
 				size_hint_x: .04
-				text: 'Save'
 				on_press: root.show_save()
+                background_color: (0.0, 0.0, 0.0, 0.0)
+                Image:
+		            source: 'Assets/images/FlatDesign/save_transparent.png'
+		            size: (self.parent.width, self.parent.height)
+		            y: self.parent.y + self.parent.height
+        			x: self.parent.x
 			ToggleButton:
 				id: playbtn
 				size_hint_x: .03
 				#size_hint_y: .10
 				#text: 'play/pause'
-				background_normal: 'Assets/images/play2.png'
-				background_down: 'Assets/images/pause2.png'
+				background_normal: 'Assets/images/FlatDesign/play_transparent.png'
+				background_down: 'Assets/images/FlatDesign/pause_transparent.png'
 				on_press: root.play_pause(*args)
 			Label:
 				size_hint_x: .15
 				text: 'Beats per Minute (BPM) %s' % int(bpsSlider.value)
+                color: .14,.78,.35,1
 			Slider:
 				size_hint_x: .25
 				id: bpsSlider
@@ -60,6 +72,7 @@
 			Label:
 				size_hint_x: .15
 				text: 'AutoScroll'
+                color: .14,.78,.35,1
 			CheckBox:
 				id: 'autoScroll'
 				group: 'autoScroll'
@@ -91,7 +104,7 @@
 			id: tabarea
 			size_hint: (1, None)
 			height: 500
-			
+
 		BoxLayout:
 			orientation: 'vertical'
 			Widget:
