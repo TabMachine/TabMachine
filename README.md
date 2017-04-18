@@ -1,5 +1,5 @@
 ## Tab Machine
-######A tab visualizer, editor, and creator
+###### A tab visualizer, editor, and creator
 
 _____________________________________________
 
